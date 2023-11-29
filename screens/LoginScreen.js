@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Link, ButtonText, VStack } from '@gluestack-ui/themed';
+import { Box, Button, Link, ButtonText, VStack, Center, Image, Text } from '@gluestack-ui/themed';
 import StyledInput from '../components/input';
 
 const LoginScreen = ({ navigation }) => {
@@ -30,9 +30,21 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <VStack px={32} py={48} alignItems="center" minHeight={"$full"}>
+    <Center minHeight={'$full'}>
 
-      <Box mt={16} width={"$full"} maxWidth={384}>
+      <Box width={"$full"} maxWidth={384}>
+
+        <Center>
+          <Image
+            size="md" borderRadius="$none"
+            source={require('../assets/gimnasio.png')}
+          />
+        </Center>
+
+        <Text fontSize={24} fontWeight={"bold"} mt={16} mb={16}>
+          Bienvenido a GymXpert! 🏋️‍♀️
+        </Text>
+
         <StyledInput
           label={"Correo electrónico"}
           id={"email"}
@@ -56,7 +68,7 @@ const LoginScreen = ({ navigation }) => {
           onChange={handleInputChange}
         />
 
-        <Link href="/todo">
+        <Link mt={16}>
           <Button>
             <ButtonText>
               Log In
@@ -64,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
           </Button>
         </Link>
       </Box>
-    </VStack>
+    </Center>
   );
 };
 
