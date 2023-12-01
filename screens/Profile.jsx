@@ -1,5 +1,5 @@
 import { Text, Box, Center, Image, Button, ButtonText, ButtonIcon, HStack, ScrollView, VStack } from "@gluestack-ui/themed";
-import { Check, Pencil, Phone, UserIcon } from "lucide-react-native";
+import { Check, Droplet, Mail, Pencil, Phone, UserIcon } from "lucide-react-native";
 import Payment from "../components/profile/Payment";
 import Asistencia from "../components/profile/Asistencia";
 import { useEffect, useState } from "react";
@@ -48,35 +48,47 @@ export default function Profile() {
                 </Center>
                 <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24}>
                     <Text fontSize={18} fontWeight="$medium" mb={16}>Información</Text>
-                    <HStack gap={8}>
-                        <UserIcon size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <UserIcon size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Nombre completo: </Text>
                         <Text fontSize={16}>{user.name}</Text>
                     </HStack>
-                    <HStack gap={8}>
-                        <Check size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <Check size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Status: </Text>
                         <Text fontSize={16}>{user.status}</Text>
                     </HStack>
                     <Text fontSize={18} fontWeight="$normal" my={16}>Contacto</Text>
-                    <HStack gap={8}>
-                        <Phone size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <Phone size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Telefono: </Text>
                         <Text fontSize={16}>{user.phone}</Text>
                     </HStack>
-                    <HStack gap={8}>
-                        <UserIcon size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <Mail size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Correo: </Text>
                         <Text fontSize={16}>{user.email}</Text>
                     </HStack>
-                    <HStack gap={8}>
-                        <UserIcon size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <Phone size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Emergencia: </Text>
                         <Text fontSize={16}>{user.emergency}</Text>
                     </HStack>
                     <Text fontSize={18} fontWeight="$normal" my={16}>Salud</Text>
-                    <HStack gap={8}>
-                        <UserIcon size={20} color="#5d596c" />
+                    <HStack gap={8} alignItems="center">
+                        <Box minWidth={20}>
+                            <Droplet size={20} color="#5d596c" />
+                        </Box>
                         <Text fontSize={16} fontWeight="$medium">Tipo de sangre: </Text>
                         <Text fontSize={16}>{user.blood}</Text>
                     </HStack>
