@@ -22,7 +22,7 @@ const StyledInput = (props) => {
     id !== "" && (
       <>
         <Box my={6}>
-          <Text color="$rgb(93, 89, 108)" fontSize={14} lineHeight={24} >
+          <Text color="#5d596c" fontSize={14} lineHeight={24} >
             {label}
           </Text>
           <Input
@@ -39,7 +39,7 @@ const StyledInput = (props) => {
               onChange={onChange}
               autoComplete={autoComplete}
               secureTextEntry={type == "password" ? true : false}
-              color="$rgb(93, 89, 108)"
+              color="#5d596c"
               placeholderTextColor={"#6f6b7d"}
               borderWidth={1}
               bgColor="$white"
