@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Button, Link, ButtonText, VStack, Center, Image, Text } from '@gluestack-ui/themed';
-import StyledInput from '../components/input';
+import { Box, Button, Link, ButtonText, Center, Image, Text } from '@gluestack-ui/themed';
+import StyledInput from '../components/Input';
 
 const LoginScreen = ({ navigation }) => {
   const [user, setUser] = useState({
