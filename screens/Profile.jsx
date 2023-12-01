@@ -12,13 +12,8 @@ export default function Profile() {
         email: "",
         emergency: "",
         blood: "",
-        asistencias: [
-            { date: "", hours: "" },
-        ],
-        payments: [
-            { date: "", payment: "" },
-        ]
-
+        asistencias: [],
+        payments: []
     });
     let user1 = {// Temporal
         name: "Alanna Spinka",
@@ -86,6 +81,11 @@ export default function Profile() {
                         <Text fontSize={16}>{user.blood}</Text>
                     </HStack>
                 </Box>
+                {user.asistencias.length > 0 ? null :
+                    <Box bg="$error100" w={"$full"} rounded={8} p={12}>
+                        <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay asistencias</Text>
+                    </Box>
+                }
                 <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24}>
                     <Text fontSize={18} fontWeight="$medium" mb={16}>Asistencias</Text>
                     <VStack gap={24}>
@@ -95,9 +95,11 @@ export default function Profile() {
                         }
                     </VStack>
                 </Box>
-                <Box bg="$error100" w={"$full"} rounded={8} p={12}>
-                    <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay pago</Text>
-                </Box>
+                {user.payments.length > 0 ? null :
+                    <Box bg="$error100" w={"$full"} rounded={8} p={12}>
+                        <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay pago</Text>
+                    </Box>
+                }
                 <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24}>
                     <Text fontSize={18} fontWeight="$medium" mb={16}>Pagos</Text>
                     <VStack gap={24}>
