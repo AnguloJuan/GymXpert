@@ -5,12 +5,14 @@ const StyledInput = (props) => {
   const {
     id,
     type,
+    contentType,
     label,
     placeholder,
     required,
     disabled,
     autoComplete,
     onChange,
+    value
   } = props;
   
   var { invalid } = props;
@@ -38,12 +40,15 @@ const StyledInput = (props) => {
               placeholder={placeholder}
               onChange={onChange}
               autoComplete={autoComplete}
+              type={type}
+              textContentType={contentType}
               secureTextEntry={type == "password" ? true : false}
               color="#5d596c"
               placeholderTextColor={"#6f6b7d"}
               borderWidth={1}
               bgColor="$white"
               borderColor="rgb(219, 218, 222)"
+              value={value}
               sx={{
                 ":focus": {
                   borderColor: "rgb(115, 103, 240)",

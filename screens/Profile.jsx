@@ -1,8 +1,9 @@
-import { Text, Box, Center, Image, Button, ButtonText, ButtonIcon, HStack, ScrollView, VStack } from "@gluestack-ui/themed";
+import { Box, Button, ButtonIcon, ButtonText, Center, HStack, Image, ScrollView, Text, VStack } from "@gluestack-ui/themed";
 import { Check, Droplet, Mail, Pencil, Phone, UserIcon } from "lucide-react-native";
-import Payment from "../components/profile/Payment";
-import Asistencia from "../components/profile/Asistencia";
 import { useEffect, useState } from "react";
+import Asistencia from "../components/profile/Asistencia";
+import EditUserModalForm from "../components/profile/EditUserModalForm";
+import Payment from "../components/profile/Payment";
 
 export default function Profile() {
     const [user, setUser] = useState({
@@ -15,13 +16,15 @@ export default function Profile() {
         asistencias: [],
         payments: []
     });
+    const [showEditModal, setShowEditModal] = useState(false);
+
     let user1 = {// Temporal
         name: "Alanna Spinka",
         status: "Activo",
         phone: "6125229115",
         email: "kziemann@yahoo.com",
         emergency: "6121874995",
-        blood: "A-",
+        blood: "O+",
         asistencias: [
             { date: "Lunes", hours: "15hrs - 16hrs" },
             { date: "Martes", hours: "15hrs - 16hrs" },
@@ -41,7 +44,11 @@ export default function Profile() {
                 <Center p={24} bg="$white" w={"$full"} rounded={8} gap={8}>
                     <Image source={require("../assets/avatars/5.png")} borderRadius={8} />
                     <Text fontSize={24} fontWeight="$semibold">{user.name}</Text>
-                    <Button gap={8} rounded={8} mt={16}>
+                    <Button
+                        gap={8}
+                        rounded={8}
+                        mt={16}
+                        onPress={() => setShowEditModal(true)}>
                         <ButtonIcon as={Pencil} />
                         <ButtonText>Editar Información</ButtonText>
                     </Button>
@@ -122,6 +129,14 @@ export default function Profile() {
                     </VStack>
                 </Box>
             </Box>
+
+            <EditUserModalForm
+                user={user}
+                showEditModal={showEditModal}
+                setShowEditModal={setShowEditModal}
+                setUser={setUser}
+            />
+
         </ScrollView>
     );
 }
