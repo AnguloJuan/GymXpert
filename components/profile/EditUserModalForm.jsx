@@ -106,9 +106,7 @@ const EditUserModalForm = (props) => {
                             color="#5d596c"
                             invalid={invalidName}
                             value={editUser.name}
-                            onChange={(e) => {
-                                handleInputChange(e);
-                            }}
+                            onChange={handleInputChange}
                         />
                         <StyledInput
                             id="email"
@@ -120,9 +118,7 @@ const EditUserModalForm = (props) => {
                             color="#5d596c"
                             invalid={invalidEmail}
                             value={editUser.email}
-                            onChange={(e) => {
-                                handleInputChange(e);
-                            }}
+                            onChange={handleInputChange}
                         />
                         <StyledInput
                             id="phone"
@@ -134,9 +130,7 @@ const EditUserModalForm = (props) => {
                             color="#5d596c"
                             invalid={invalidPhone}
                             value={editUser.phone}
-                            onChange={(e) => {
-                                handleInputChange(e);
-                            }}
+                            onChange={handleInputChange}
                         />
                         <StyledInput
                             id="emergency"
@@ -148,9 +142,7 @@ const EditUserModalForm = (props) => {
                             color="#5d596c"
                             invalid={invalidEmergency}
                             value={editUser.emergency}
-                            onChange={(e) => {
-                                handleInputChange(e);
-                            }}
+                            onChange={handleInputChange}
                         />
 
                         <Text color="#5d596c" fontSize={14} lineHeight={24} >
@@ -159,7 +151,6 @@ const EditUserModalForm = (props) => {
                         <Select
                             id="blood"
                             onValueChange={(e) => {
-                                console.log(e);
                                 setEditUser((prevCriteria) => ({ ...prevCriteria, blood: e }));
                             }}
                             selectedValue={editUser.blood}
@@ -174,9 +165,6 @@ const EditUserModalForm = (props) => {
                             <SelectPortal>
                                 <SelectBackdrop />
                                 <SelectContent>
-                                    <ScrollView>
-
-                                    </ScrollView>
                                     <SelectDragIndicatorWrapper>
                                         <SelectDragIndicator />
                                     </SelectDragIndicatorWrapper>
