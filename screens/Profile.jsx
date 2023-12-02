@@ -39,10 +39,10 @@ export default function Profile() {
         setUser(user1);
     }, []);
     return (
-        <ScrollView width={"$full"} centerContent p={24} sx={{ _text: "#5d596c" }}>
+        <ScrollView width={"$full"} centerContent p={24} sx={{ _text: {color: "#5d596c"} }}>
             <Box gap={24}>
                 <Center p={24} bg="$white" w={"$full"} rounded={8} gap={8}>
-                    <Image source={require("../assets/avatars/5.png")} borderRadius={8} />
+                    <Image source={require("../assets/avatars/5.png")} alt="Profile pic" borderRadius={8} />
                     <Text fontSize={24} fontWeight="$semibold">{user.name}</Text>
                     <Button
                         gap={8}
