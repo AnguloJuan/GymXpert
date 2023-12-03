@@ -1,52 +1,52 @@
-import { Box, Button, ButtonText, Center, ChevronDownIcon, Icon, Image, Link, Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger, Text } from '@gluestack-ui/themed';
+import { Box, Button, ButtonText, Center, ChevronDownIcon, Icon, Image, Link, LinkText, ScrollView, Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import StyledInput from '../components/Input';
-import { ScrollView } from '@gluestack-ui/themed';
-import { LinkText } from '@gluestack-ui/themed';
 
 const SignUpScreen = ({ navigation }) => {
     const [user, setUser] = useState({
         name: "",
-        status: 0,
+        status: "",
         phone: "",
         email: "",
         emergency: "",
-        blood: 0,
+        blood: "",
+        password: "",
     });
     const [invalidName, setInvalidName] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
     const [invalidPhone, setInvalidPhone] = useState(false);
     const [invalidEmergency, setInvalidEmergency] = useState(false);
 
+    const toast = useToast();
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
 
         // Validations
         if (id === "name") {
-            if (!value.match(/^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s']+$/i)) {
+            if (!value.match(/^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s']+$/i) || value.length == 0) {
                 setInvalidName(true);
             } else {
                 setInvalidName(false);
             }
         }
         if (id === "email") {
-            if (!value.match(
-                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-            )) {
+            if (!value.match(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)
+                || value.length == 0) {
                 setInvalidEmail(true);
             } else {
                 setInvalidEmail(false);
             }
         }
         if (id === "phone") {
-            if (!value.match(/^[0-9]+$/i)) {
+            if (!value.match(/^[0-9]+$/i) || value.length == 0) {
                 setInvalidPhone(true);
             } else {
                 setInvalidPhone(false);
             }
         }
         if (id === "emergency") {
-            if (!value.match(/^[0-9]+$/i)) {
+            if (!value.match(/^[0-9]+$/i) || value.length == 0) {
                 setInvalidEmergency(true);
             } else {
                 setInvalidEmergency(false);
@@ -55,6 +55,31 @@ const SignUpScreen = ({ navigation }) => {
 
         setUser((prevCriteria) => ({ ...prevCriteria, [id]: value }));
     };
+
+    const SignIn = () => {
+        if (invalidName || invalidEmail || invalidPhone || invalidEmergency
+            || user.name.length == 0 || user.email.length == 0 || user.phone.length == 0 || user.emergency.length == 0 ||
+             user.password.length == 0 || user.blood.length == 0 || user.status.length == 0) {
+            toast.show({
+                placement: "bottom",
+                render: ({ id }) => {
+                    return (
+                        <Toast nativeId={id} action="error" variant="accent">
+                            <VStack space="xs">
+                                <ToastTitle>Error</ToastTitle>
+                                <ToastDescription>
+                                    Por favor, llena todos los campos correctamente
+                                </ToastDescription>
+                            </VStack>
+                        </Toast>
+                    );
+                },
+            })
+            return;
+        }
+        // Sign In API Proccess
+
+    }
 
     return (
         <ScrollView>
@@ -195,7 +220,7 @@ const SignUpScreen = ({ navigation }) => {
                     />
 
                     <Link mt={16}>
-                        <Button>
+                        <Button onPress={SignIn}>
                             <ButtonText>
                                 Registrarse
                             </ButtonText>
@@ -211,10 +236,7 @@ const SignUpScreen = ({ navigation }) => {
                         o
                     </Text>
 
-                    <Link
-                        onPress={() => { navigation.navigate('Iniciar Sesión') }}
-
-                    >
+                    <Link onPress={() => { navigation.navigate('Iniciar Sesión') }}>
                         <LinkText
                             mt={12}
                             fontSize={14}
