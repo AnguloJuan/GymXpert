@@ -74,7 +74,7 @@ export default function Profile() {
                         <Box minWidth={20}>
                             <Phone size={20} color="#5d596c" />
                         </Box>
-                        <Text fontSize={16} fontWeight="$medium">Telefono: </Text>
+                        <Text fontSize={16} fontWeight="$medium">Teléfono: </Text>
                         <Text fontSize={16}>{user.phone}</Text>
                     </HStack>
                     <HStack gap={8} alignItems="center">
