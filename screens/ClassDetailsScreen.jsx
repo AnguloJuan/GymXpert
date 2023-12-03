@@ -1,46 +1,58 @@
 import { Box, Button, ButtonText, Center, HStack, ScrollView, Text } from "@gluestack-ui/themed";
 import { useState } from "react";
-export default function ClassDetails() {
+import ConfirmInscription from "../components/clases/ConfirmInscriptionModal";
+import { Image } from "@gluestack-ui/themed";
+export default function ClassDetails({ route }) {
+    const { id } = route.params;
     const clase = {
-        id: 1,
-        trainer: "Alanna Spinka",
+        trainer: {
+            name: "Albert Cook",
+            email: "albert@gmail.com",
+            phone: "1234567890",
+        },
         clase: "Yoga",
         description: "Clase de yoga para principiantes",
+        assistants: 10,
+        maxAssistants: 20,
     }
     const [showInscriptionModal, setShowInscriptionModal] = useState(false);
 
     return (
         <>
             <ScrollView p={16} minHeight={"$full"}>
-                <Center width="$full" bgColor="white" rounded={8} gap={12}>
-                    <Text fontSize={24} fontWeight="$medium" mt={40} mb={12} color="#5d596c">Detalles de la clase</Text>
+                <Center width="$full" bgColor="white" rounded={8} gap={12} p={24}>
+                    <Text fontSize={24} fontWeight="$medium" mt={40} mb={12} color="#5d596c">Detalles de la clase #{id}</Text>
 
-                    <Box p={24} pt={0} w={"$full"}>
-                        <Box borderColor="#5d596c" borderWidth={1} rounded={8} key={clase.id} w={"$full"} my={24} p={16}>
-                            <Text fontSize={20} fontWeight="$medium" alignSelf="center" color="#5d596c" mt={12} mb={8}>{clase.trainer}</Text>
-                            <Text fontSize={28} fontWeight="medium" alignSelf="center" color="#5d596c" mt={12} mb={16}>{clase.clase}</Text>
-                            <Text color="#5d596c">{clase.description}</Text>
-                            <HStack w={"$full"} justifyContent="space-around" mt={16} >
-                                <Button
-                                    w={"auto"}
-                                    action="positive"
-                                    onPress={() => setShowInscriptionModal(true)}>
-                                    <ButtonText>
-                                        Ver Detalles
-                                    </ButtonText>
-                                </Button>
-                                <Button
-                                    w={"auto"}
-                                    onPress={() => setShowInscriptionModal(true)}>
-                                    <ButtonText>
-                                        Inscribirse
-                                    </ButtonText>
-                                </Button>
-                            </HStack>
-                        </Box>
-                    </Box>
+                    <Center borderColor="#dbdade" borderWidth={1} rounded={8} key={clase.id} w={"$full"} p={16} gap={8}>
+                        <Text fontSize={24} fontWeight="medium" color="#6f6b7d" >Entrenador</Text>
+                        <Image source={require("../assets/avatars/5.png")} alt="Entrenador" borderRadius={8} />
+                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >{clase.trainer.name}</Text>
+                        <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">Correo: {clase.trainer.email}</Text>
+                        <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">Teléfono: {clase.trainer.phone}</Text>
+                    </Center>
+                    <Center borderColor="#dbdade" borderWidth={1} rounded={8} key={clase.id} w={"$full"} p={16} gap={8}>
+                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Descripción</Text>
+                        <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">{clase.description}</Text>
+                    </Center>
+                    <Center borderColor="#dbdade" borderWidth={1} rounded={8} key={clase.id} w={"$full"} p={16}>
+                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Asistentes</Text>
+                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >{clase.assistants} / {clase.maxAssistants}</Text>
+                    </Center>
+                    <Button
+                        w={"$full"}
+                        onPress={() => setShowInscriptionModal(true)}>
+                        <ButtonText>
+                            Inscribirse
+                        </ButtonText>
+                    </Button>
 
                 </Center>
+
+                <ConfirmInscription
+                    showInscriptionModal={showInscriptionModal}
+                    setShowInscriptionModal={setShowInscriptionModal}
+                    classId={id}
+                />
             </ScrollView>
 
         </>
