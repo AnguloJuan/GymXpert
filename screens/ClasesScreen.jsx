@@ -1,8 +1,7 @@
-import { Box, Button, ButtonText, Center, ScrollView, Text } from "@gluestack-ui/themed";
+import { Box, Button, ButtonText, Center, HStack, ScrollView, Text } from "@gluestack-ui/themed";
 import { useState } from "react";
-import { HStack } from "@gluestack-ui/themed";
 import ConfirmInscription from "../components/clases/ConfirmInscriptionModal";
-export default function Fares() {
+export default function Clases({ navigation }) {
     const clases = [
         {
             id: 1,
@@ -41,7 +40,11 @@ export default function Fares() {
                                     <Button
                                         w={"auto"}
                                         action="positive"
-                                        onPress={() => setShowInscriptionModal(true)}>
+                                        onPress={
+                                            () => {
+                                                navigation.navigate("Detalles de la clase")
+                                            }
+                                        }>
                                         <ButtonText>
                                             Ver Detalles
                                         </ButtonText>

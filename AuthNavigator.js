@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Calendar, CreditCard, User } from 'lucide-react-native';
 import React from 'react';
+import ClasesNavigation from './ClasesNavigation';
 import Fares from './screens/Fares';
 import LoginScreen from './screens/LoginScreen';
 import Profile from './screens/Profile';
@@ -11,10 +12,11 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthNavigator = () => {
-    const isSignedIn = false; // temporary variable
+    const isSignedIn = true; // temporary variable
     return (
         isSignedIn ? (
             <Tab.Navigator
+                initialRouteName='Clases'
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -34,7 +36,7 @@ const AuthNavigator = () => {
                 })}>
                 <Tab.Screen name="Perfil" component={Profile} />
                 <Tab.Screen name="Tarifas" component={Fares} />
-                <Tab.Screen name="Clases" component={Fares} />
+                <Tab.Screen name="Clases" component={ClasesNavigation} options={{ headerShown: false }} />
             </Tab.Navigator>
         ) : (
             <Stack.Navigator initialRouteName='Iniciar Sesión'>
