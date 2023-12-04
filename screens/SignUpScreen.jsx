@@ -123,10 +123,10 @@ const SignUpScreen = ({ navigation }) => {
                     />
                     <StyledInput
                         id="phone"
-                        label="Telefono"
+                        label="Teléfono"
                         type="text"
                         contentType="telephoneNumber"
-                        placeholder="Telefono"
+                        placeholder="Teléfono"
                         autoComplete="phone"
                         color="#5d596c"
                         invalid={invalidPhone}
@@ -137,7 +137,7 @@ const SignUpScreen = ({ navigation }) => {
                         label="Contacto de emergencia"
                         type="text"
                         contentType="telephoneNumber"
-                        placeholder="Telefono de emergencia"
+                        placeholder="Teléfono de emergencia"
                         autoComplete="emergency"
                         color="#5d596c"
                         invalid={invalidEmergency}

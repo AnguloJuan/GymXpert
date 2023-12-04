@@ -122,7 +122,7 @@ const EditUserModalForm = (props) => {
                         />
                         <StyledInput
                             id="phone"
-                            label="Telefono"
+                            label="Teléfono"
                             type="text"
                             contentType="telephoneNumber"
                             placeholder={editUser.phone}
