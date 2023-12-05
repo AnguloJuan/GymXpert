@@ -1,8 +1,9 @@
-import { Box, Button, ButtonText, Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
+import { Box, Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import PaymentMethodModal from "../components/fares/PaymetMethodModal";
 import { BASE_URL } from "../Constants";
+import Fare from "../components/fares/Fare";
+import PaymentMethodModal from "../components/fares/PaymetMethodModal";
 
 export default function Fares() {
     const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -47,22 +48,11 @@ export default function Fares() {
 
                     <Box p={24} pt={0} w={"$full"}>
                         {fares.length !== 0 ? fares.map((fare) => (
-                            <Box borderColor="#5d596c" borderWidth={1} rounded={8} key={fare.id} w={"$full"} my={24}>
-                                <Box p={16}>
-                                    <Text fontSize={20} fontWeight="$medium" alignSelf="center" color="#5d596c" my={12}>{fare.name}</Text>
-                                    <Text fontSize={28} fontWeight="medium" alignSelf="center" color="$blue600" mt={12} mb={16}>$ {fare.price}</Text>
-                                    <Text color="#5d596c">{fare.description}</Text>
-                                </Box>
-                                <Button
-                                    w={"$full"}
-                                    borderTopLeftRadius={0}
-                                    borderTopRightRadius={0}
-                                    onPress={() => setShowPaymentModal(true)}>
-                                    <ButtonText>
-                                        Comprar
-                                    </ButtonText>
-                                </Button>
-                            </Box>
+                            <Fare
+                                fare={fare}
+                                setShowPaymentModal={setShowPaymentModal}
+                                key={fare.id}
+                            />
                         )) : (<Spinner />)}
                     </Box>
                     <PaymentMethodModal
