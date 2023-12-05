@@ -5,7 +5,7 @@ const ConfirmInscription = (props) => {
     const {
         showInscriptionModal,
         setShowInscriptionModal,
-        classId
+        sessionId
     } = props;
 
     const toast = useToast();
@@ -29,7 +29,7 @@ const ConfirmInscription = (props) => {
                 <ModalBackdrop h={"$full"} />
                 <ModalContent bgColor="$white" alignSelf="center" mt={"$3"} mb={"$32"} >
                     <ModalHeader>
-                        <Heading size="lg" color="#5d596c">Inscripción a la clase #{classId}</Heading>
+                        <Heading size="lg" color="#5d596c">Inscripción a la clase #{sessionId}</Heading>
                         <ModalCloseButton
                             stroke={"#5d596c"}
                             bgColor="$red100"
