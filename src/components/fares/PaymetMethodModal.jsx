@@ -80,7 +80,6 @@ const PaymentMethodModal = (props) => {
                         contentType="creditCardNumber"
                         placeholder="1234 1234 1234 1234"
                         autoComplete="creditCardNumber"
-                        color="#5d596c"
                         disabled={paymentMethod !== "Tarjeta"}
                         //invalid={invalidName}
                         value={creditCardNumber}

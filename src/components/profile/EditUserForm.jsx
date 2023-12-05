@@ -11,7 +11,6 @@ export default function EditUserForm({ editUser, setEditUser, invalidName, inval
                 contentType="name"
                 placeholder={editUser.name}
                 autoComplete="name"
-                color="#5d596c"
                 invalid={invalidName}
                 value={editUser.name}
                 onChange={handleInputChange}
@@ -23,7 +22,6 @@ export default function EditUserForm({ editUser, setEditUser, invalidName, inval
                 contentType="emailAddress"
                 placeholder={editUser.email}
                 autoComplete="email"
-                color="#5d596c"
                 invalid={invalidEmail}
                 value={editUser.email}
                 onChange={handleInputChange}
@@ -35,7 +33,6 @@ export default function EditUserForm({ editUser, setEditUser, invalidName, inval
                 contentType="telephoneNumber"
                 placeholder={editUser.phone}
                 autoComplete="phone"
-                color="#5d596c"
                 invalid={invalidPhone}
                 value={editUser.phone}
                 onChange={handleInputChange}
@@ -47,7 +44,6 @@ export default function EditUserForm({ editUser, setEditUser, invalidName, inval
                 contentType="telephoneNumber"
                 placeholder={editUser.emergency_phone}
                 autoComplete="emergency_phone"
-                color="#5d596c"
                 invalid={invalidEmergency}
                 value={editUser.emergency_phone}
                 onChange={handleInputChange}
