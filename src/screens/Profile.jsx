@@ -5,7 +5,7 @@ import Asistencia from "../components/profile/Asistencia";
 import EditUserModal from "../components/profile/EditUserModal";
 import Payment from "../components/profile/Payment";
 import axios from "axios";
-import { BASE_URL } from "../../Constants";
+import BASE_URL  from "../../Constants";
 
 export default function Profile() {
     const [user, setUser] = useState({

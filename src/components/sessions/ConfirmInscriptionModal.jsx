@@ -1,7 +1,7 @@
 import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useRef } from "react";
-import { BASE_URL } from "../../../Constants";
+import BASE_URL from "../../../Constants";
 
 const ConfirmInscription = (props) => {
     const {

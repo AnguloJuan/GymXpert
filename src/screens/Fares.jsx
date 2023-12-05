@@ -1,7 +1,7 @@
 import { Box, Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../Constants";
+import BASE_URL  from "../../Constants";
 import Fare from "../components/fares/Fare";
 import PaymentMethodModal from "../components/fares/PaymetMethodModal";
 

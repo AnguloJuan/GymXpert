@@ -2,7 +2,7 @@ import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import EditUserForm from "./EditUserForm";
-import { BASE_URL } from "../../../Constants";
+import BASE_URL from "../../../Constants";
 
 const EditUserModalForm = (props) => {
     const {
