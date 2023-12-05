@@ -4,9 +4,9 @@ import { Calendar, CreditCard, User } from 'lucide-react-native';
 import React from 'react';
 import SessionsNavigation from './SessionsNavigation';
 import Fares from './screens/Fares';
-import LoginScreen from './screens/LoginScreen';
+import Login from './screens/Login';
 import Profile from './screens/Profile';
-import SignUpScreen from './screens/signUpScreen';
+import SignUp from './screens/signUp';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,8 +40,8 @@ const AuthNavigator = () => {
             </Tab.Navigator>
         ) : (
             <Stack.Navigator initialRouteName='Iniciar Sesión'>
-                <Stack.Screen name="Iniciar Sesión" component={LoginScreen} />
-                <Stack.Screen name="Registro" component={SignUpScreen} />
+                <Stack.Screen name="Iniciar Sesión" component={Login} />
+                <Stack.Screen name="Registro" component={SignUp} />
             </Stack.Navigator>
         )
     );

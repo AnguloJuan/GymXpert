@@ -2,7 +2,7 @@ import { Box, Button, ButtonText, Center, ChevronDownIcon, Icon, Image, Link, Li
 import React, { useState } from 'react';
 import StyledInput from '../components/Input';
 
-const SignUpScreen = ({ navigation }) => {
+const SignUp = ({ navigation }) => {
     const [user, setUser] = useState({
         name: "",
         status: "",
@@ -252,4 +252,4 @@ const SignUpScreen = ({ navigation }) => {
     );
 };
 
-export default SignUpScreen;
+export default SignUp;

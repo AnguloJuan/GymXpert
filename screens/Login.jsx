@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText } from '@gluestack-ui/themed';
 import StyledInput from '../components/Input';
 
-const LoginScreen = ({ navigation }) => {
+const Login = ({ navigation }) => {
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -106,4 +106,4 @@ const LoginScreen = ({ navigation }) => {
     );
 };
 
-export default LoginScreen;
+export default Login;
