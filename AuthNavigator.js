@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Calendar, CreditCard, User } from 'lucide-react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import SessionsNavigation from './SessionsNavigation';
 import Fares from './src/screens/Fares';
 import Login from './src/screens/Login';
 import Profile from './src/screens/Profile';
 import SignUp from './src/screens/SignUp';
+import { AuthContext } from './src/context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

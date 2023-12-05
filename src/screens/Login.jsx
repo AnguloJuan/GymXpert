@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 const Login = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
     const [user, setUser] = useState({
-        code: "",
+        email: "",
         password: "",
     });
     var [invalidEmail, setInvalidEmail] = useState(false);
@@ -69,14 +69,11 @@ const Login = ({ navigation }) => {
                     value={user.password}
                     onChange={handleInputChange}
                 />
-
-                <Link mt={16}>
-                    <Button>
-                        <ButtonText onPress={signIn( code, password )}>
-                            Iniciar Sesión
-                        </ButtonText>
-                    </Button>
-                </Link>
+                <Button onPress={() => signIn(user.email, user.password)}>
+                    <ButtonText>
+                        Iniciar Sesión
+                    </ButtonText>
+                </Button>
 
                 <Text
                     mt={24}

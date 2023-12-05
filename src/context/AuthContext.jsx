@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { BASE_URL } from '../../Constants';
+import BASE_URL from '../../Constants';
 
 const AuthContext = createContext();
 
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
             }
         } catch (error) {
             alert('Datos incorrectos', 'Por favor, verifica tus datos');
-            console.error(error);
+            console.log(error);
         }
     };
 
