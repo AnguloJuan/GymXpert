@@ -2,7 +2,7 @@ import { Box, Button, ButtonIcon, ButtonText, Center, HStack, Image, ScrollView,
 import { Check, Droplet, Mail, Pencil, Phone, UserIcon } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import Asistencia from "../components/profile/Asistencia";
-import EditUserModalForm from "../components/profile/EditUserModalForm";
+import EditUserModal from "../components/profile/EditUserModal";
 import Payment from "../components/profile/Payment";
 import axios from "axios";
 import { BASE_URL } from "../Constants";
@@ -78,7 +78,6 @@ export default function Profile() {
         axios.get(`${BASE_URL}/customers/${user_id}`)
             .then((response) => {
                 setUser(response.data.data);
-                console.log(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -182,7 +181,7 @@ export default function Profile() {
                 </Box>
             </Box>
 
-            <EditUserModalForm
+            <EditUserModal
                 showEditModal={showEditModal}
                 setShowEditModal={setShowEditModal}
                 user={user}
