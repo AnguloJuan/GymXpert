@@ -11,12 +11,16 @@ const EditUserModalForm = (props) => {
     } = props;
 
     const [editUser, setEditUser] = useState({
+        id: 0,
         name: "",
-        status: "Inactivo",
+        is_active: 0,
         phone: "",
         email: "",
-        emergency: "",
-        blood: "O-",
+        emergency_phone: "",
+        blood_group: {
+            id: 0,
+            name: ""
+        },
     });
     const toast = useToast();
 
@@ -133,15 +137,15 @@ const EditUserModalForm = (props) => {
                             onChange={handleInputChange}
                         />
                         <StyledInput
-                            id="emergency"
+                            id="emergency_phone"
                             label="Contacto de emergencia"
                             type="text"
                             contentType="telephoneNumber"
-                            placeholder={editUser.emergency}
-                            autoComplete="emergency"
+                            placeholder={editUser.emergency_phone}
+                            autoComplete="emergency_phone"
                             color="#5d596c"
                             invalid={invalidEmergency}
-                            value={editUser.emergency}
+                            value={editUser.emergency_phone}
                             onChange={handleInputChange}
                         />
 
@@ -149,11 +153,42 @@ const EditUserModalForm = (props) => {
                             Tipo de Sangre
                         </Text>
                         <Select
-                            id="blood"
+                            id="blood_group"
                             onValueChange={(e) => {
-                                setEditUser((prevCriteria) => ({ ...prevCriteria, blood: e }));
+                                let blood_group = { id: 0, name: "" };
+                                switch (e) {
+                                    case "O-":
+                                        blood_group = { id: 5, name: "O-" };
+                                        break;
+                                    case "O+":
+                                        blood_group = { id: 7, name: "O+" };
+                                        break;
+                                    case "A-":
+                                        blood_group = { id: 2, name: "A-" };
+                                        break;
+                                    case "A+":
+                                        blood_group = { id: 6, name: "A+" };
+                                        break;
+                                    case "B-":
+                                        blood_group = { id: 8, name: "B-" };
+                                        break;
+                                    case "B+":
+                                        blood_group = { id: 3, name: "B+" };
+                                        break;
+                                    case "AB-":
+                                        blood_group = { id: 1, name: "AB-" };
+                                        break;
+                                    case "AB+":
+                                        blood_group = { id: 4, name: "AB+" };
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                setEditUser((prevCriteria) => ({
+                                    ...prevCriteria, blood_group: { ...blood_group }
+                                }));
                             }}
-                            selectedValue={editUser.blood}
+                            selectedValue={editUser.blood_group.name}
                             my={"$2"}
                         >
                             <SelectTrigger variant="outline" size="md" >
@@ -186,9 +221,10 @@ const EditUserModalForm = (props) => {
                         <Select
                             id="status"
                             onValueChange={(e) => {
-                                setEditUser((prevCriteria) => ({ ...prevCriteria, status: e }));
+                                e === "Activo" ? e = 1 : e = 0;
+                                setEditUser((prevCriteria) => ({ ...prevCriteria, is_active: e }));
                             }}
-                            selectedValue={editUser.status}
+                            selectedValue={editUser.is_active ? "Activo" : "Inactivo"}
                             my={"$2"}
                         >
                             <SelectTrigger variant="outline" size="md" >
