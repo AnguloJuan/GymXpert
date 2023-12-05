@@ -12,9 +12,9 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthNavigator = () => {
-    const isSignedIn = true; // temporary variable
+    const { user } = useContext(AuthContext);
     return (
-        isSignedIn ? (
+        user.isSignedIn ? (
             <Tab.Navigator
                 initialRouteName='Clases'
                 screenOptions={({ route }) => ({

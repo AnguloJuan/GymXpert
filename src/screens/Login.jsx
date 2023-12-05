@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText } from '@gluestack-ui/themed';
 import StyledInput from '../components/Input';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = ({ navigation }) => {
+    const { signIn } = useContext(AuthContext);
     const [user, setUser] = useState({
-        email: "",
+        code: "",
         password: "",
     });
     var [invalidEmail, setInvalidEmail] = useState(false);
@@ -31,9 +33,7 @@ const Login = ({ navigation }) => {
 
     return (
         <Center minHeight={'$full'} p={24} bgColor='$white'>
-
             <Box width={"$full"} maxWidth={384}>
-
                 <Center>
                     <Image
                         size="md" borderRadius="$none"
@@ -72,7 +72,7 @@ const Login = ({ navigation }) => {
 
                 <Link mt={16}>
                     <Button>
-                        <ButtonText>
+                        <ButtonText onPress={signIn( code, password )}>
                             Iniciar Sesión
                         </ButtonText>
                     </Button>
