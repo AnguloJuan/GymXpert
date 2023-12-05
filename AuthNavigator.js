@@ -3,10 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Calendar, CreditCard, User } from 'lucide-react-native';
 import React from 'react';
 import SessionsNavigation from './SessionsNavigation';
-import Fares from './screens/Fares';
-import Login from './screens/Login';
-import Profile from './screens/Profile';
-import SignUp from './screens/signUp';
+import Fares from './src/screens/Fares';
+import Login from './src/screens/Login';
+import Profile from './src/screens/Profile';
+import SignUp from './src/screens/SignUp';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
