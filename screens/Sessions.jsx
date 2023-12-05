@@ -74,11 +74,13 @@ export default function Sessions({ navigation }) {
                         />
                     )) : <Spinner />}
                 </Center>
-                <ConfirmInscription
-                    showInscriptionModal={showInscriptionModal}
-                    setShowInscriptionModal={setShowInscriptionModal}
-                    sessionId={sessionId}
-                />
+                {sessions.length !== 0 && sessionId !== 0 && (
+                    <ConfirmInscription
+                        showInscriptionModal={showInscriptionModal}
+                        setShowInscriptionModal={setShowInscriptionModal}
+                        session={sessions.find((session) => session.id === sessionId)}
+                    />
+                )}
             </ScrollView>
 
         </>

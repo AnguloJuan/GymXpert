@@ -1,11 +1,12 @@
 import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Text, useToast } from "@gluestack-ui/themed";
+import axios from "axios";
 import { useRef } from "react";
 
 const ConfirmInscription = (props) => {
     const {
         showInscriptionModal,
         setShowInscriptionModal,
-        sessionId
+        session
     } = props;
 
     const toast = useToast();
@@ -29,7 +30,7 @@ const ConfirmInscription = (props) => {
                 <ModalBackdrop h={"$full"} />
                 <ModalContent bgColor="$white" alignSelf="center" mt={"$3"} mb={"$32"} >
                     <ModalHeader>
-                        <Heading size="lg" color="#5d596c">Inscripción a la clase #{sessionId}</Heading>
+                        <Heading size="lg" color="#5d596c">Inscripción a la clase</Heading>
                         <ModalCloseButton
                             stroke={"#5d596c"}
                             bgColor="$red100"
@@ -42,9 +43,8 @@ const ConfirmInscription = (props) => {
                         </ModalCloseButton>
                     </ModalHeader>
                     <ModalBody color="#5d596c" py={12}>
-                        <Text>
-                            ¿Estas seguro que deseas inscribirte a esta clase?
-                        </Text>
+                        <Text>¿Estas seguro que deseas inscribirte a esta clase?</Text>
+                        <Text fontWeight="$medium" textAlign="center">{session !== "" ? session.session.name : ""}</Text>
                     </ModalBody>
                     <ModalFooter pt={"$3"} pb={"$5"} >
                         <Button
@@ -63,10 +63,16 @@ const ConfirmInscription = (props) => {
                             action="primary"
                             borderWidth="$0"
                             onPress={() => {
-                                // API connecion and validation first here
-                                // ...
+                                // API call to register customer to session
+                                axios.post(`${BASE_URL}/session-days/${session.id}/register`)
+                                    .then((response) => {
+                                        console.log(response);
+                                        setShowInscriptionModal(false);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
 
-                                setShowInscriptionModal(false);
                             }}
                         >
                             <ButtonText>Inscribirse</ButtonText>

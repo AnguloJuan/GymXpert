@@ -41,7 +41,7 @@ export default function ClassDetails({ route }) {
                         <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">Teléfono: {session.instructor.phone}</Text>
                     </Center>
                     <Center borderColor="#dbdade" borderWidth={1} rounded={8} w={"$full"} p={16} gap={8}>
-                        <Text fontSize={28} fontWeight="$medium" color="#6f6b7d" my={8} >{session.session.name}</Text>
+                        <Text fontSize={24} fontWeight="$medium"  textAlign="center" color="#6f6b7d" my={8} >{session.session.name}</Text>
                         <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Descripción</Text>
                         <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">{session.session.description}</Text>
                     </Center>
@@ -62,7 +62,7 @@ export default function ClassDetails({ route }) {
                 <ConfirmInscription
                     showInscriptionModal={showInscriptionModal}
                     setShowInscriptionModal={setShowInscriptionModal}
-                    classId={id}
+                    session={session}
                 />
             </ScrollView>
 
