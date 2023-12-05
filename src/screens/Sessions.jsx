@@ -1,7 +1,7 @@
 import { Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../Constants";
+import { BASE_URL } from "../../Constants";
 import SessionComponent from "../components/sessions/Session";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
 export default function Sessions({ navigation }) {
