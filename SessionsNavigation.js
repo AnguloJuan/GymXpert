@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 const SessionsNavigation = () => {
     return (
-        <Stack.Navigator initialRouteName='Iniciar Sesión'>
+        <Stack.Navigator initialRouteName='Clases'>
             <Stack.Screen name="Clases" component={Sessions} />
             <Stack.Screen name="Detalles de la clase" component={SessionDetails} />
         </Stack.Navigator>
