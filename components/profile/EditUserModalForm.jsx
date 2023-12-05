@@ -269,7 +269,8 @@ const EditUserModalForm = (props) => {
                                     !invalidName &&
                                     !invalidEmail &&
                                     !invalidPhone &&
-                                    !invalidEmergency) {
+                                    !invalidEmergency &&
+                                    editUser.blood_group.name !== "") {
                                     // API connecion and validation first here
                                     // ...
                                     // Then edit user
