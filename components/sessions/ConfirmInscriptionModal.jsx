@@ -1,6 +1,7 @@
 import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Text, useToast } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useRef } from "react";
+import { BASE_URL } from "../../Constants";
 
 const ConfirmInscription = (props) => {
     const {
@@ -10,9 +11,8 @@ const ConfirmInscription = (props) => {
     } = props;
 
     const toast = useToast();
-
     const ref = useRef(null);
-
+    const customerId = 1; // Temporal
     return (
         <Modal
             isOpen={showInscriptionModal}
@@ -64,7 +64,10 @@ const ConfirmInscription = (props) => {
                             borderWidth="$0"
                             onPress={() => {
                                 // API call to register customer to session
-                                axios.post(`${BASE_URL}/session-days/${session.id}/register`)
+                                axios.post(`${BASE_URL}/session-days/subscribe`, {
+                                    session_day_id: session.id,
+                                    customer_id: customerId,
+                                })
                                     .then((response) => {
                                         console.log(response);
                                         setShowInscriptionModal(false);
