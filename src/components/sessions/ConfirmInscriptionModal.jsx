@@ -1,7 +1,7 @@
-import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
-import axios from "axios";
-import { useRef } from "react";
+import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
+import { useContext, useRef } from "react";
 import BASE_URL from "../../../Constants";
+import { AuthContext } from "../../context/AuthContext";
 
 const ConfirmInscription = (props) => {
     const {
@@ -12,7 +12,8 @@ const ConfirmInscription = (props) => {
 
     const toast = useToast();
     const ref = useRef(null);
-    const customerId = 1; // Temporal
+    const { user } = useContext(AuthContext);
+
     return (
         <Modal
             isOpen={showInscriptionModal}
@@ -61,9 +62,9 @@ const ConfirmInscription = (props) => {
                         borderWidth="$0"
                         onPress={() => {
                             // API call to register customer to session
-                            axios.post(`${BASE_URL}/session-days/subscribe`, {
+                            BASE_URL.post(`/session-days/subscribe`, {
                                 session_day_id: session.id,
-                                customer_id: customerId,
+                                customer_id: user.id,
                             })
                                 .then((response) => {
                                     toast.show({

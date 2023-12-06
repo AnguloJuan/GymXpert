@@ -18,7 +18,7 @@ const AuthNavigator = () => {
     return (
         user.isSignedIn ? (
             <Tab.Navigator
-                initialRouteName='Clases'
+                initialRouteName='Perfil'
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;

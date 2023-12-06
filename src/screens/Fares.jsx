@@ -31,7 +31,7 @@ export default function Fares() {
 
     // Fetch fares from backend with axios
     useEffect(() => {
-        axios.get(`${BASE_URL}/fares`)
+        BASE_URL.get("/fares")
             .then((response) => {
                 setFares(response.data.data);
             })

@@ -1,11 +1,11 @@
-import { Box, Button, ButtonIcon, ButtonText, Center, HStack, Image, ScrollView, Text, VStack } from "@gluestack-ui/themed";
+import { Box, Button, ButtonIcon, ButtonText, Center, HStack, Image, ScrollView, Spinner, Text, VStack } from "@gluestack-ui/themed";
 import { Check, Droplet, Mail, Pencil, Phone, UserIcon } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import BASE_URL from "../../Constants";
 import Asistencia from "../components/profile/Asistencia";
 import EditUserModal from "../components/profile/EditUserModal";
 import Payment from "../components/profile/Payment";
-import axios from "axios";
-import BASE_URL  from "../../Constants";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Profile() {
     const [user, setUser] = useState({
@@ -23,6 +23,7 @@ export default function Profile() {
         payments: []
     });
     const [showEditModal, setShowEditModal] = useState(false);
+    const { user: user_id } = useContext(AuthContext);
 
     /*let user1 = {// Temporal
         name: "Alanna Spinka",
@@ -71,11 +72,10 @@ export default function Profile() {
         ]
     }*/
 
-    let user_id = 1; // Temporal
     useEffect(() => {
         //setUser(user1);
         // Get user data from API
-        axios.get(`${BASE_URL}/customers/${user_id}`)
+        BASE_URL.get(`/customers/${user_id.id}`)
             .then((response) => {
                 setUser(response.data.data);
             })
@@ -84,7 +84,7 @@ export default function Profile() {
             });
     }, []);
 
-    return (
+    return user ? (
         <ScrollView width={"$full"} centerContent p={24} sx={{ _text: { color: "#5d596c" } }}>
             <Box gap={24}>
                 <Center p={24} bg="$white" w={"$full"} rounded={8} gap={8}>
@@ -189,5 +189,5 @@ export default function Profile() {
             />
 
         </ScrollView>
-    );
+    ) : <Spinner />;
 }

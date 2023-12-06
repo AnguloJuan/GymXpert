@@ -140,7 +140,7 @@ const EditUserModalForm = (props) => {
                                     !invalidEmergency &&
                                     editUser.blood_group.name !== "") {
                                     // API connecion and validation first here
-                                    axios.put(`${BASE_URL}/customer/${editUser.id}`, editUser)
+                                    BASE_URL.put(`/customer/${editUser.id}`, editUser)
                                         .then((res) => {
                                             toast({
                                                 title: "Usuario actualizado",

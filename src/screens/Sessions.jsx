@@ -47,7 +47,7 @@ export default function Sessions({ navigation }) {
 
     // Fetch classes from backend with axios
     useEffect(() => {
-        axios.get(`${BASE_URL}/session-days`)
+        BASE_URL.get("/session-days")
             .then((response) => {
                 sessionsList = response.data.data;
                 // set first 5 sessions

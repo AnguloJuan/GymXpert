@@ -40,7 +40,6 @@ const AuthProvider = ({ children }) => {
         }
         try {
             const loginResponse = await BASE_URL.post('/login', formData, headers);
-            console.log(loginResponse.data.customer_id);
             if (loginResponse.data.status === "success") {
                 setUser({
                     id: loginResponse.data.customer_id,
