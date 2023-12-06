@@ -1,8 +1,7 @@
-import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, useToast } from "@gluestack-ui/themed";
+import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import EditUserForm from "./EditUserForm";
 import BASE_URL from "../../../Constants";
+import EditUserForm from "./EditUserForm";
 
 const EditUserModalForm = (props) => {
     const {
@@ -102,7 +101,7 @@ const EditUserModalForm = (props) => {
                         </ModalCloseButton>
                     </ModalHeader>
                     <ModalBody color="#5d596c">
-                        
+
                         <EditUserForm
                             editUser={editUser}
                             setEditUser={setEditUser}
@@ -140,27 +139,58 @@ const EditUserModalForm = (props) => {
                                     !invalidEmergency &&
                                     editUser.blood_group.name !== "") {
                                     // API connecion and validation first here
-                                    BASE_URL.put(`/customer/${editUser.id}`, editUser)
+                                    const formData = new FormData();
+                                    formData.append('name', editUser.name);
+                                    formData.append('phone', editUser.phone);
+                                    formData.append('emergency_phone', editUser.emergency_phone);
+                                    formData.append('email', editUser.email);
+                                    formData.append('blood_group_id', editUser.blood_group.id);
+                                    formData.append('is_active', editUser.is_active);
+                                    const headers = {
+                                        headers: {
+                                            'Accept': 'application/json',
+                                        },
+                                    }
+                                    BASE_URL.patch(`/customers/${editUser.id}`, formData, headers)
                                         .then((res) => {
-                                            toast({
-                                                title: "Usuario actualizado",
-                                                description: "La información del usuario ha sido actualizada exitosamente.",
-                                                status: "success",
-                                                duration: 5000,
-                                                isClosable: true,
-                                            });
+                                            if (res.data.status === "success") {
+                                                toast.show({
+                                                    placement: "bottom",
+                                                    render: ({ id }) => {
+                                                        return (
+                                                            <Toast nativeId={id} action="success" variant="accent">
+                                                                <VStack space="xs">
+                                                                    <ToastTitle>Éxito</ToastTitle>
+                                                                    <ToastDescription>
+                                                                        {res.data.message}
+                                                                        Codigo: {response.data.code}
+                                                                    </ToastDescription>
+                                                                </VStack>
+                                                            </Toast>
+                                                        );
+                                                    },
+                                                })
+                                                setUser(editUser);
+                                            }
                                         })
                                         .catch((err) => {
-                                            toast({
-                                                title: "Error",
-                                                description: "Hubo un error al actualizar la información del usuario.",
-                                                status: "error",
-                                                duration: 5000,
-                                                isClosable: true,
-                                            });
+                                            console.log(err);
+                                            toast.show({
+                                                placement: "bottom",
+                                                render: ({ id }) => {
+                                                    return (
+                                                        <Toast nativeId={id} action="error" variant="accent">
+                                                            <VStack space="xs">
+                                                                <ToastTitle>Error</ToastTitle>
+                                                                <ToastDescription>
+                                                                    {err.response.data.message}
+                                                                </ToastDescription>
+                                                            </VStack>
+                                                        </Toast>
+                                                    );
+                                                },
+                                            })
                                         });
-                                    // Then edit user
-                                    setUser(editUser);
                                     setShowEditModal(false);
                                 }
                             }}
