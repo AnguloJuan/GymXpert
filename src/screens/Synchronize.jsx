@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText } from '@gluestack-ui/themed';
+import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText, Toast, VStack, ToastTitle, useToast } from '@gluestack-ui/themed';
 import StyledInput from '../components/Input';
 import { AuthContext } from '../context/AuthContext';
+import { ToastDescription } from '@gluestack-ui/themed';
 
 const Synchronize = ({ navigation }) => {
-    const { LogIn } = useContext(AuthContext);
+    const { synchronize } = useContext(AuthContext);
     const [user, setUser] = useState({
         code: "",
+        email: "",
         password: "",
     });
-    var [invalidCode, setInvalidCode] = useState(false);
+    const [invalidCode, setInvalidCode] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
+    const toast = useToast();
 
     // Function to handle input changes
     const handleInputChange = (e) => {
@@ -35,6 +38,28 @@ const Synchronize = ({ navigation }) => {
 
         setUser((prevCriteria) => ({ ...prevCriteria, [id]: value }));
     };
+
+    const sync = () => {
+        if (invalidCode || invalidEmail || user.password.length == 0 || user.code.length == 0 || user.email.length == 0) {
+            toast.show({
+                placement: "bottom",
+                render: ({ id }) => {
+                    return (
+                        <Toast nativeId={id} action="error" variant="accent">
+                            <VStack space="xs">
+                                <ToastTitle>Error</ToastTitle>
+                                <ToastDescription>
+                                    Por favor, llena todos los campos correctamente
+                                </ToastDescription>
+                            </VStack>
+                        </Toast>
+                    );
+                },
+            })
+            return;
+        }
+        synchronize(user.email, user.code, user.password);
+    }
 
     return (
         <Center minHeight={'$full'} p={24} bgColor='$white'>
@@ -88,7 +113,7 @@ const Synchronize = ({ navigation }) => {
                     value={user.password}
                     onChange={handleInputChange}
                 />
-                <Button onPress={() => { }}>
+                <Button onPress={() => sync()}>
                     <ButtonText>
                         Sincronizar
                     </ButtonText>

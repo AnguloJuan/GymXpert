@@ -122,13 +122,86 @@ const AuthProvider = ({ children }) => {
             });
     };
 
+    const synchronize = async (email, code, password) => {
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('code', code);
+        formData.append('password', password);
+        const headers = {
+            headers: {
+                'Accept': 'application/json',
+            },
+        }
+        BASE_URL.post("/sync-account", formData, headers)
+            .then((response) => {
+                if (response.data.status === "success") {
+                    toast.show({
+                        placement: "bottom",
+                        render: ({ id }) => {
+                            return (
+                                <Toast nativeId={id} action="success" variant="accent">
+                                    <VStack space="xs">
+                                        <ToastTitle>Éxito</ToastTitle>
+                                        <ToastDescription>
+                                            {response.data.message}
+                                            Codigo: {response.data.code}
+                                        </ToastDescription>
+                                    </VStack>
+                                </Toast>
+                            );
+                        },
+                    })
+                    setUser({
+                        id: response.data.customer_id,
+                        isSignedIn: true,
+                    })
+                }
+                if (response.data.status === "failed") {
+                    toast.show({
+                        placement: "bottom",
+                        render: ({ id }) => {
+                            return (
+                                <Toast nativeId={id} action="error" variant="accent">
+                                    <VStack space="xs">
+                                        <ToastTitle>Error</ToastTitle>
+                                        <ToastDescription>
+                                            {response.data.errors.internal_error}
+                                        </ToastDescription>
+                                    </VStack>
+                                </Toast>
+                            );
+                        },
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error.response);
+                toast.show({
+                    placement: "bottom",
+                    render: ({ id }) => {
+                        return (
+                            <Toast nativeId={id} action="error" variant="accent">
+                                <VStack space="xs">
+                                    <ToastTitle>Error</ToastTitle>
+                                    <ToastDescription>
+                                        {error.response.data.message}
+                                    </ToastDescription>
+                                </VStack>
+                            </Toast>
+                        );
+                    },
+                })
+            });
+    };
+
     return (
         <AuthContext.Provider
             value={{
                 user,
                 logIn,
                 logOut,
-                signUp
+                signUp,
+                synchronize,
             }}
         >
             {children}
