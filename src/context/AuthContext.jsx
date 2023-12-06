@@ -46,6 +46,7 @@ const AuthProvider = ({ children }) => {
                     isSignedIn: true,
                 })
             }
+            console.log(loginResponse.data);
         } catch (error) {
             alert('Datos incorrectos', 'Por favor, verifica tus datos');
             console.log(error);
@@ -54,15 +55,10 @@ const AuthProvider = ({ children }) => {
 
     const logOut = async () => {
         try {
-            const response = await BASE_URL.post('/logout', {}, {
-            });
-            console.log(response.data);
-            if (response.data.status === "success") {
-                setUser({
-                    id: 0,
-                    isSignedIn: false,
-                })
-            }
+            setUser({
+                id: 0,
+                isSignedIn: false,
+            })
         } catch (error) {
             console.error(error);
         }

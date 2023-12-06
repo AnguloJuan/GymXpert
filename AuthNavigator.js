@@ -9,6 +9,7 @@ import Profile from './src/screens/Profile';
 import SignUp from './src/screens/SignUp';
 import { AuthContext } from './src/context/AuthContext';
 import Synchronize from './src/screens/Synchronize';
+import LogOutButton from './src/components/LogOutButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,7 +21,7 @@ const AuthNavigator = () => {
             <Tab.Navigator
                 initialRouteName='Perfil'
                 screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
+                    tabBarIcon: ({ color }) => {
                         let iconName;
 
                         if (route.name === 'Perfil') {
@@ -35,6 +36,9 @@ const AuthNavigator = () => {
                     tabBarInactiveTintColor: '#5d596c',
                     tabBarActiveBackgroundColor: '#0077e6',
                     tabBarInactiveBackgroundColor: '#fff',
+                    headerRight: () => (
+                        <LogOutButton />
+                    ),
                 })}>
                 <Tab.Screen name="Perfil" component={Profile} />
                 <Tab.Screen name="Tarifas" component={Fares} />
