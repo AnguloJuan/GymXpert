@@ -8,6 +8,7 @@ import Login from './src/screens/Login';
 import Profile from './src/screens/Profile';
 import SignUp from './src/screens/SignUp';
 import { AuthContext } from './src/context/AuthContext';
+import Synchronize from './src/screens/Synchronize';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,6 +44,7 @@ const AuthNavigator = () => {
             <Stack.Navigator initialRouteName='Iniciar Sesión'>
                 <Stack.Screen name="Iniciar Sesión" component={Login} />
                 <Stack.Screen name="Registro" component={SignUp} />
+                <Stack.Screen name="Sincronizar" component={Synchronize} />
             </Stack.Navigator>
         )
     );

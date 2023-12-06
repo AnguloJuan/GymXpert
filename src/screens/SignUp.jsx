@@ -1,23 +1,23 @@
-import { Box, Button, ButtonText, Center, ChevronDownIcon, Icon, Image, Link, LinkText, ScrollView, Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from '@gluestack-ui/themed';
-import React, { useState } from 'react';
-import StyledInput from '../components/Input';
+import { Box, Button, ButtonText, Center, Image, Link, LinkText, ScrollView, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from '@gluestack-ui/themed';
+import React, { useContext, useState } from 'react';
+import SignUpForm from '../components/SignUpForm';
+import { AuthContext } from '../context/AuthContext';
 
 const SignUp = ({ navigation }) => {
     const [user, setUser] = useState({
         name: "",
-        status: "",
         phone: "",
+        emergency_phone: "",
         email: "",
-        emergency: "",
-        blood: "",
+        blood_group_id: 0,
         password: "",
     });
     const [invalidName, setInvalidName] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
     const [invalidPhone, setInvalidPhone] = useState(false);
     const [invalidEmergency, setInvalidEmergency] = useState(false);
-
     const toast = useToast();
+    const { signUp } = useContext(AuthContext);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -45,7 +45,7 @@ const SignUp = ({ navigation }) => {
                 setInvalidPhone(false);
             }
         }
-        if (id === "emergency") {
+        if (id === "emergency_phone") {
             if (!value.match(/^[0-9]+$/i) || value.length == 0) {
                 setInvalidEmergency(true);
             } else {
@@ -56,10 +56,10 @@ const SignUp = ({ navigation }) => {
         setUser((prevCriteria) => ({ ...prevCriteria, [id]: value }));
     };
 
-    const SignIn = () => {
+    const sign = () => {
         if (invalidName || invalidEmail || invalidPhone || invalidEmergency
-            || user.name.length == 0 || user.email.length == 0 || user.phone.length == 0 || user.emergency.length == 0 ||
-             user.password.length == 0 || user.blood.length == 0 || user.status.length == 0) {
+            || user.name.length == 0 || user.email.length == 0 || user.phone.length == 0 || user.emergency_phone.length == 0 ||
+            user.password.length == 0 || user.blood_group_id === 0) {
             toast.show({
                 placement: "bottom",
                 render: ({ id }) => {
@@ -77,8 +77,7 @@ const SignUp = ({ navigation }) => {
             })
             return;
         }
-        // Sign In API Proccess
-
+        signUp(user);
     }
 
     return (
@@ -99,133 +98,21 @@ const SignUp = ({ navigation }) => {
                         Bienvenido a GymXpert! 🏋️‍♀️
                     </Text>
 
-                    <StyledInput
-                        id="name"
-                        label="Nombre completo"
-                        type="text"
-                        contentType="name"
-                        placeholder="Nombre completo"
-                        autoComplete="name"
-                        color="#5d596c"
-                        invalid={invalidName}
-                        onChange={handleInputChange}
-                    />
-                    <StyledInput
-                        id="email"
-                        label="Correo electrónico"
-                        type="text"
-                        contentType="emailAddress"
-                        placeholder="Correo electrónico"
-                        autoComplete="email"
-                        color="#5d596c"
-                        invalid={invalidEmail}
-                        onChange={handleInputChange}
-                    />
-                    <StyledInput
-                        id="phone"
-                        label="Teléfono"
-                        type="text"
-                        contentType="telephoneNumber"
-                        placeholder="Teléfono"
-                        autoComplete="phone"
-                        color="#5d596c"
-                        invalid={invalidPhone}
-                        onChange={handleInputChange}
-                    />
-                    <StyledInput
-                        id="emergency"
-                        label="Contacto de emergencia"
-                        type="text"
-                        contentType="telephoneNumber"
-                        placeholder="Teléfono de emergencia"
-                        autoComplete="emergency"
-                        color="#5d596c"
-                        invalid={invalidEmergency}
-                        onChange={handleInputChange}
+                    <SignUpForm
+                        user={user}
+                        setUser={setUser}
+                        invalidName={invalidName}
+                        invalidEmail={invalidEmail}
+                        invalidPhone={invalidPhone}
+                        invalidEmergency={invalidEmergency}
+                        handleInputChange={handleInputChange}
                     />
 
-                    <Text color="#5d596c" fontSize={14} lineHeight={24} >
-                        Tipo de Sangre
-                    </Text>
-                    <Select
-                        id="blood"
-                        onValueChange={(e) => {
-                            console.log(e);
-                            setUser((prevCriteria) => ({ ...prevCriteria, blood: e }));
-                        }}
-                        my={"$2"}
-                    >
-                        <SelectTrigger variant="outline" size="md" >
-                            <SelectInput placeholder="Tipo de sangre" />
-                            <SelectIcon mr="$3">
-                                <Icon as={ChevronDownIcon} />
-                            </SelectIcon>
-                        </SelectTrigger>
-                        <SelectPortal>
-                            <SelectBackdrop />
-                            <SelectContent>
-                                <SelectDragIndicatorWrapper>
-                                    <SelectDragIndicator />
-                                </SelectDragIndicatorWrapper>
-                                <SelectItem label="O-" value="O-" />
-                                <SelectItem label="O+" value="O+" />
-                                <SelectItem label="A-" value="A-" />
-                                <SelectItem label="A+" value="A+" />
-                                <SelectItem label="B-" value="B-" />
-                                <SelectItem label="B+" value="B+" />
-                                <SelectItem label="AB-" value="AB-" />
-                                <SelectItem label="AB+" value="AB+" />
-                            </SelectContent>
-                        </SelectPortal>
-                    </Select>
-
-                    <Text color="#5d596c" fontSize={14} lineHeight={24} >
-                        Status
-                    </Text>
-                    <Select
-                        id="status"
-                        onValueChange={(e) => {
-                            setUser((prevCriteria) => ({ ...prevCriteria, status: e }));
-                        }}
-                        my={"$2"}
-                    >
-                        <SelectTrigger variant="outline" size="md" >
-                            <SelectInput placeholder="Status" />
-                            <SelectIcon mr="$3">
-                                <Icon as={ChevronDownIcon} />
-                            </SelectIcon>
-                        </SelectTrigger>
-                        <SelectPortal>
-                            <SelectBackdrop />
-                            <SelectContent>
-                                <SelectDragIndicatorWrapper>
-                                    <SelectDragIndicator />
-                                </SelectDragIndicatorWrapper>
-                                <SelectItem label="Inactivo" value="Inactivo" />
-                                <SelectItem label="Activo" value="Activo" />
-                            </SelectContent>
-                        </SelectPortal>
-                    </Select>
-
-                    <StyledInput
-                        label={"Contraseña"}
-                        id={"password"}
-                        type={"password"}
-                        contentType={"password"}
-                        placeholder={"Ingresa tu contraseña"}
-                        autoComplete={"password"}
-                        required
-                        value={user.password}
-                        onChange={handleInputChange}
-                    />
-
-                    <Link mt={16}>
-                        <Button onPress={SignIn}>
-                            <ButtonText>
-                                Registrarse
-                            </ButtonText>
-                        </Button>
-                    </Link>
+                    <Button onPress={sign}>
+                        <ButtonText>
+                            Registrarse
+                        </ButtonText>
+                    </Button>
 
                     <Text
                         mt={24}

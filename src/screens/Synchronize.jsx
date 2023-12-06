@@ -1,26 +1,35 @@
-import { Box, Button, ButtonText, Center, HStack, Image, Link, LinkText, Text } from '@gluestack-ui/themed';
 import React, { useContext, useState } from 'react';
+import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText } from '@gluestack-ui/themed';
 import StyledInput from '../components/Input';
 import { AuthContext } from '../context/AuthContext';
 
-const Login = ({ navigation }) => {
-    const { logIn } = useContext(AuthContext);
+const Synchronize = ({ navigation }) => {
+    const { LogIn } = useContext(AuthContext);
     const [user, setUser] = useState({
         code: "",
         password: "",
     });
     var [invalidCode, setInvalidCode] = useState(false);
+    const [invalidEmail, setInvalidEmail] = useState(false);
 
     // Function to handle input changes
     const handleInputChange = (e) => {
         const { id, value } = e.target;
 
         //validation
-        if (id === "code") {
-            if (!value.match(/^[0-9]+$/i) || value.length == 0) {
-                setInvalidCode(true);
+        if (id === "code" && !value.match(/^[0-9]+$/i)) {
+            setInvalidCode(true);
+            return;
+        } else {
+            setInvalidCode(false);
+        }
+        if (id === "email") {
+            if (!value.match(
+                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+            )) {
+                setInvalidEmail(true);
             } else {
-                setInvalidCode(false);
+                setInvalidEmail(false);
             }
         }
 
@@ -56,6 +65,19 @@ const Login = ({ navigation }) => {
                 />
 
                 <StyledInput
+                    id="email"
+                    label="Correo electrónico"
+                    type="text"
+                    contentType="emailAddress"
+                    placeholder="Ingrese su correo electrónico"
+                    autoComplete="email"
+                    required
+                    invalid={invalidEmail}
+                    value={user.email}
+                    onChange={handleInputChange}
+                />
+
+                <StyledInput
                     label={"Contraseña"}
                     id={"password"}
                     type={"password"}
@@ -66,61 +88,38 @@ const Login = ({ navigation }) => {
                     value={user.password}
                     onChange={handleInputChange}
                 />
-                <Button onPress={() => logIn(user.code, user.password)}>
+                <Button onPress={() => { }}>
                     <ButtonText>
-                        Iniciar Sesión
+                        Sincronizar
                     </ButtonText>
                 </Button>
 
-                <HStack mt={24} alignSelf='center'>
-                    <Text
+                <Text
+                    fontSize={14}
+                    lineHeight={20}
+                    mt={24}
+                    textAlign="center"
+                >
+                    o
+                </Text>
+
+                <Link
+                    onPress={() => { navigation.navigate('Iniciar Sesión') }}
+                    mt={12}
+                >
+                    <LinkText
                         fontSize={14}
                         lineHeight={20}
                         textAlign="center"
+                        color="$blue"
                     >
-                        No tienes cuenta?
-                    </Text>
-
-                    <Link
-                        onPress={() => { navigation.navigate('Registro') }}
-                    >
-                        <LinkText
-                            fontSize={14}
-                            lineHeight={20}
-                            ml={2}
-                            textAlign="center"
-                            color="$blue"
-                        >
-                            Registrarse
-                        </LinkText>
-                    </Link>
-                </HStack>
-                <Box mt={24} alignSelf='center'>
-                    <Text
-                        fontSize={14}
-                        lineHeight={20}
-                        textAlign="center"
-                    >
-                        Fue registrado en el gimnasio?
-                    </Text>
-
-                    <Link
-                        onPress={() => { navigation.navigate('Sincronizar') }}
-                    >
-                        <LinkText
-                            fontSize={14}
-                            lineHeight={20}
-                            textAlign="center"
-                            color="$blue"
-                        >
-                            Sincronizar cuenta
-                        </LinkText>
-                    </Link>
-                </Box>
+                        Iniciar sesión
+                    </LinkText>
+                </Link>
 
             </Box>
         </Center >
     );
 };
 
-export default Login;
+export default Synchronize;
