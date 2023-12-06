@@ -1,6 +1,6 @@
 import { Box, Button, ButtonText, Text } from "@gluestack-ui/themed";
 
-export default function Fare({ fare, setShowPaymentModal }) {
+export default function Fare({ fare, setShowPaymentModal, setFareId }) {
     return (
         <Box borderColor="#5d596c" borderWidth={1} rounded={8} key={fare.id} w={"$full"} my={24}>
             <Box p={16}>
@@ -12,7 +12,10 @@ export default function Fare({ fare, setShowPaymentModal }) {
                 w={"$full"}
                 borderTopLeftRadius={0}
                 borderTopRightRadius={0}
-                onPress={() => setShowPaymentModal(true)}>
+                onPress={() => {
+                    setShowPaymentModal(true);
+                    setFareId(fare.id);
+                }}>
                 <ButtonText>
                     Comprar
                 </ButtonText>

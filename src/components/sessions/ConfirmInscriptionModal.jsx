@@ -1,7 +1,8 @@
-import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
+import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Text, useToast } from "@gluestack-ui/themed";
 import { useContext, useRef } from "react";
 import BASE_URL from "../../../Constants";
 import { AuthContext } from "../../context/AuthContext";
+import Toasts from "../Toasts";
 
 const ConfirmInscription = (props) => {
     const {
@@ -70,16 +71,13 @@ const ConfirmInscription = (props) => {
                                     toast.show({
                                         placement: "bottom",
                                         render: ({ id }) => {
-                                            return (
-                                                <Toast nativeId={id} action="success" variant="accent">
-                                                    <VStack space="xs">
-                                                        <ToastTitle>Clase inscrita</ToastTitle>
-                                                        <ToastDescription>
-                                                            {response.data.message}
-                                                        </ToastDescription>
-                                                    </VStack>
-                                                </Toast>
-                                            );
+                                            return <Toasts
+                                                id={id}
+                                                title="Clase inscrita"
+                                                body={<Text>{response.data.message}</Text>}
+                                                variant="accent"
+                                                action="success"
+                                            />
                                         },
                                     })
                                     setShowInscriptionModal(false);
@@ -89,16 +87,13 @@ const ConfirmInscription = (props) => {
                                     toast.show({
                                         placement: "bottom",
                                         render: ({ id }) => {
-                                            return (
-                                                <Toast nativeId={id} action="error" variant="accent">
-                                                    <VStack space="xs">
-                                                        <ToastTitle>Error</ToastTitle>
-                                                        <ToastDescription>
-                                                            {error.response.data.message}
-                                                        </ToastDescription>
-                                                    </VStack>
-                                                </Toast>
-                                            );
+                                            return <Toasts
+                                                id={id}
+                                                title="Error"
+                                                body={<Text>{error.response.data.message}</Text>}
+                                                variant="accent"
+                                                action="error"
+                                            />
                                         },
                                     })
                                 });

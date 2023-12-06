@@ -3,6 +3,7 @@ import { Box, Button, Link, ButtonText, Center, Image, Text, LinkText, Toast, VS
 import StyledInput from '../components/Input';
 import { AuthContext } from '../context/AuthContext';
 import { ToastDescription } from '@gluestack-ui/themed';
+import Toasts from '../components/Toasts';
 
 const Synchronize = ({ navigation }) => {
     const { synchronize } = useContext(AuthContext);
@@ -44,16 +45,13 @@ const Synchronize = ({ navigation }) => {
             toast.show({
                 placement: "bottom",
                 render: ({ id }) => {
-                    return (
-                        <Toast nativeId={id} action="error" variant="accent">
-                            <VStack space="xs">
-                                <ToastTitle>Error</ToastTitle>
-                                <ToastDescription>
-                                    Por favor, llena todos los campos correctamente
-                                </ToastDescription>
-                            </VStack>
-                        </Toast>
-                    );
+                    return <Toasts
+                        id={id}
+                        title="Error"
+                        body={<Text>Por favor, llena todos los campos correctamente</Text>}
+                        variant="accent"
+                        action="error"
+                    />
                 },
             })
             return;

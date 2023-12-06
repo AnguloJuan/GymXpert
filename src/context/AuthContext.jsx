@@ -1,9 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import BASE_URL from '../../Constants';
-import { Toast, VStack } from '@gluestack-ui/themed';
-import { ToastTitle } from '@gluestack-ui/themed';
-import { ToastDescription } from '@gluestack-ui/themed';
 import { useToast } from '@gluestack-ui/themed';
+import Toasts from '../components/Toasts';
+import { Text } from '@gluestack-ui/themed';
 
 const AuthContext = createContext();
 
@@ -46,9 +45,34 @@ const AuthProvider = ({ children }) => {
                     isSignedIn: true,
                 })
             }
-            console.log(loginResponse.data);
+            if (loginResponse.data.status === "failed") {
+                toast.show({
+                    placement: "bottom",
+                    render: ({ id }) => {
+                        return <Toasts
+                            id={id}
+                            title="Error"
+                            body={loginResponse.data.errors.internal_error.map((error, id) => <Text key={id}>{error}</Text>)}
+                            variant="accent"
+                            action="error"
+                        />
+                    },
+                })
+                console.log(loginResponse.data);
+            }
         } catch (error) {
-            alert('Datos incorrectos', 'Por favor, verifica tus datos');
+            toast.show({
+                placement: "bottom",
+                render: ({ id }) => {
+                    return <Toasts
+                        id={id}
+                        title="Error"
+                        body={<Text>{error.response.data.message}</Text>}
+                        variant="accent"
+                        action="error"
+                    />
+                },
+            })
             console.log(error);
         }
     };
@@ -83,17 +107,18 @@ const AuthProvider = ({ children }) => {
                     toast.show({
                         placement: "bottom",
                         render: ({ id }) => {
-                            return (
-                                <Toast nativeId={id} action="success" variant="accent">
-                                    <VStack space="xs">
-                                        <ToastTitle>Éxito</ToastTitle>
-                                        <ToastDescription>
-                                            {response.data.message}
-                                            Codigo: {response.data.code}
-                                        </ToastDescription>
-                                    </VStack>
-                                </Toast>
-                            );
+                            return <Toasts
+                                id={id}
+                                title="Éxito"
+                                body={
+                                    <>
+                                        <Text>{response.data.message}</Text>
+                                        <Text>Codigo: {response.data.code}</Text>
+                                    </>
+                                }
+                                variant="accent"
+                                action="success"
+                            />
                         },
                     })
                     setUser({
@@ -107,16 +132,13 @@ const AuthProvider = ({ children }) => {
                 toast.show({
                     placement: "bottom",
                     render: ({ id }) => {
-                        return (
-                            <Toast nativeId={id} action="error" variant="accent">
-                                <VStack space="xs">
-                                    <ToastTitle>Error</ToastTitle>
-                                    <ToastDescription>
-                                        {error.response.data.message}
-                                    </ToastDescription>
-                                </VStack>
-                            </Toast>
-                        );
+                        return <Toasts
+                            id={id}
+                            title="Error"
+                            body={<Text>{error.response.data.message}</Text>}
+                            variant="accent"
+                            action="error"
+                        />
                     },
                 })
             });
@@ -138,17 +160,18 @@ const AuthProvider = ({ children }) => {
                     toast.show({
                         placement: "bottom",
                         render: ({ id }) => {
-                            return (
-                                <Toast nativeId={id} action="success" variant="accent">
-                                    <VStack space="xs">
-                                        <ToastTitle>Éxito</ToastTitle>
-                                        <ToastDescription>
-                                            {response.data.message}
-                                            Codigo: {response.data.code}
-                                        </ToastDescription>
-                                    </VStack>
-                                </Toast>
-                            );
+                            return <Toasts
+                                id={id}
+                                title="Éxito"
+                                body={
+                                    <>
+                                        <Text>{response.data.message}</Text>
+                                        <Text>Codigo: {response.data.code}</Text>
+                                    </>
+                                }
+                                variant="accent"
+                                action="success"
+                            />
                         },
                     })
                     setUser({
@@ -160,16 +183,13 @@ const AuthProvider = ({ children }) => {
                     toast.show({
                         placement: "bottom",
                         render: ({ id }) => {
-                            return (
-                                <Toast nativeId={id} action="error" variant="accent">
-                                    <VStack space="xs">
-                                        <ToastTitle>Error</ToastTitle>
-                                        <ToastDescription>
-                                            {response.data.errors.internal_error}
-                                        </ToastDescription>
-                                    </VStack>
-                                </Toast>
-                            );
+                            return <Toasts
+                                id={id}
+                                title="Error"
+                                body={<Text>{response.data.message}</Text>}
+                                variant="accent"
+                                action="error"
+                            />
                         },
                     })
                 }
@@ -179,16 +199,13 @@ const AuthProvider = ({ children }) => {
                 toast.show({
                     placement: "bottom",
                     render: ({ id }) => {
-                        return (
-                            <Toast nativeId={id} action="error" variant="accent">
-                                <VStack space="xs">
-                                    <ToastTitle>Error</ToastTitle>
-                                    <ToastDescription>
-                                        {error.response.data.message}
-                                    </ToastDescription>
-                                </VStack>
-                            </Toast>
-                        );
+                        return <Toasts
+                            id={id}
+                            title="Error"
+                            body={<Text>{error.response.data.message}</Text>}
+                            variant="accent"
+                            action="error"
+                        />
                     },
                 })
             });

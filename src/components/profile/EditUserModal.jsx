@@ -1,6 +1,7 @@
-import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
+import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, useToast } from "@gluestack-ui/themed";
 import { useEffect, useRef, useState } from "react";
 import BASE_URL from "../../../Constants";
+import Toasts from "../Toasts";
 import EditUserForm from "./EditUserForm";
 
 const EditUserModalForm = (props) => {
@@ -157,17 +158,18 @@ const EditUserModalForm = (props) => {
                                                 toast.show({
                                                     placement: "bottom",
                                                     render: ({ id }) => {
-                                                        return (
-                                                            <Toast nativeId={id} action="success" variant="accent">
-                                                                <VStack space="xs">
-                                                                    <ToastTitle>Éxito</ToastTitle>
-                                                                    <ToastDescription>
-                                                                        {res.data.message}
-                                                                        Codigo: {response.data.code}
-                                                                    </ToastDescription>
-                                                                </VStack>
-                                                            </Toast>
-                                                        );
+                                                        return <Toasts
+                                                            id={id}
+                                                            title="Éxito"
+                                                            body={
+                                                                <>
+                                                                    <Text>{res.data.message}</Text>
+                                                                    <Text>Codigo: {response.data.code}</Text>
+                                                                </>
+                                                            }
+                                                            variant="accent"
+                                                            action="success"
+                                                        />
                                                     },
                                                 })
                                                 setUser(editUser);
@@ -178,16 +180,13 @@ const EditUserModalForm = (props) => {
                                             toast.show({
                                                 placement: "bottom",
                                                 render: ({ id }) => {
-                                                    return (
-                                                        <Toast nativeId={id} action="error" variant="accent">
-                                                            <VStack space="xs">
-                                                                <ToastTitle>Error</ToastTitle>
-                                                                <ToastDescription>
-                                                                    {err.response.data.message}
-                                                                </ToastDescription>
-                                                            </VStack>
-                                                        </Toast>
-                                                    );
+                                                    return <Toasts
+                                                        id={id}
+                                                        title="Error"
+                                                        body={<Text>{err.response.data.message}</Text>}
+                                                        variant="accent"
+                                                        action="error"
+                                                    />
                                                 },
                                             })
                                         });

@@ -1,22 +1,96 @@
 import { Button, ButtonText, CircleIcon, CloseIcon, HStack, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel, useToast } from "@gluestack-ui/themed";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import BASE_URL from "../../../Constants";
+import { AuthContext } from "../../context/AuthContext";
 import StyledInput from "../Input";
+import Toasts from "../Toasts";
 
 const PaymentMethodModal = (props) => {
     const {
         showPaymentModal,
         setShowPaymentModal,
+        fareId
     } = props;
 
-    const [paymentMethod, setPaymentMethod] = useState("Tarjeta")
-    const [creditCardNumber, setCreditCardNumber] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState(0);
+    const [invalidPaymentMethod, setInvalidPaymentMethod] = useState(false);
+    const [creditCardNumber, setCreditCardNumber] = useState("");
+    const { user } = useContext(AuthContext);
     const toast = useToast();
 
     const ref = useRef(null);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
+        if (id === "paymentMethod") {
+            if (!value.match(/^[0-9]+$/i)) {
+                setInvalidPaymentMethod(true);
+            } else {
+                setInvalidPaymentMethod(false);
+            }
+        }
         setCreditCardNumber(value);
+    };
+
+    const handlePayment = () => {
+        if (paymentMethod !== 0 || (paymentMethod === 2 && !invalidPaymentMethod)) {
+            const formData = new FormData();
+            formData.append('customer_id', user.id);
+            formData.append('fare_id', fareId);
+            formData.append('payment_type_id', paymentMethod);
+            const headers = {
+                headers: {
+                    'Accept': 'application/json',
+                },
+            }
+            BASE_URL.post(`/fares/pay`, formData, headers)
+                .then((res) => {
+                    if (res.data.status === "success") {
+                        toast.show({
+                            placement: "top",
+                            render: ({ id }) => {
+                                return <Toasts
+                                    id={id}
+                                    title="Éxito"
+                                    body={res.data.message}
+                                    variant="accent"
+                                    action="success"
+                                />
+                            },
+                        })
+                        setShowPaymentModal(false);
+                    }
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toast.show({
+                        placement: "top",
+                        render: ({ id }) => {
+                            return <Toasts
+                                id={id}
+                                title="Error"
+                                body={err.response.data.message}
+                                variant="accent"
+                                action="error"
+                            />
+                        },
+                    })
+                });
+        } else {
+            toast.show({
+                placement: "top",
+                render: ({ id }) => {
+                    return <Toasts
+                        id={id}
+                        title="Error"
+                        body="Por favor, rellene todos los campos"
+                        variant="accent"
+                        action="error"
+                    />
+                },
+            })
+        }
     };
 
     return (
@@ -48,23 +122,30 @@ const PaymentMethodModal = (props) => {
                 <ModalBody color="#5d596c" py={12}>
                     <RadioGroup
                         my={12}
+                        id="paymentMethod"
                         value={paymentMethod}
                         onChange={
                             (value) => {
-                                if (value === "Efectivo") {
+                                if (value !== 2) {
                                     setCreditCardNumber("");
                                 }
                                 setPaymentMethod(value);
                             }
                         }>
                         <HStack space="2xl">
-                            <Radio value="Tarjeta">
+                            <Radio value={2}>
                                 <RadioIndicator mr="$2">
                                     <RadioIcon as={CircleIcon} />
                                 </RadioIndicator>
                                 <RadioLabel>Tarjeta</RadioLabel>
                             </Radio>
-                            <Radio value="Efectivo">
+                            <Radio value={3}>
+                                <RadioIndicator mr="$2">
+                                    <RadioIcon as={CircleIcon} />
+                                </RadioIndicator>
+                                <RadioLabel>Transferencia</RadioLabel>
+                            </Radio>
+                            <Radio value={1}>
                                 <RadioIndicator mr="$2">
                                     <RadioIcon as={CircleIcon} />
                                 </RadioIndicator>
@@ -80,7 +161,7 @@ const PaymentMethodModal = (props) => {
                         contentType="creditCardNumber"
                         placeholder="1234 1234 1234 1234"
                         autoComplete="creditCardNumber"
-                        disabled={paymentMethod !== "Tarjeta"}
+                        disabled={paymentMethod !== 2}
                         //invalid={invalidName}
                         value={creditCardNumber}
                         onChange={handleInputChange}
@@ -100,15 +181,10 @@ const PaymentMethodModal = (props) => {
                     </Button>
                     <Button
                         size="sm"
-                        action={(paymentMethod === "Tarjeta" && creditCardNumber === "") ? "secondary" : "primary"}
+                        action={(paymentMethod === 2 && creditCardNumber === "") ? "secondary" : "primary"}
                         borderWidth="$0"
-                        disabled={paymentMethod === "Credit Card" && creditCardNumber === ""}
-                        onPress={() => {
-                            // API connecion and validation first here
-                            // ...
-
-                            setShowPaymentModal(false);
-                        }}
+                        disabled={paymentMethod === 2 && creditCardNumber === ""}
+                        onPress={() => { handlePayment() }}
                     >
                         <ButtonText>Guardar</ButtonText>
                     </Button>

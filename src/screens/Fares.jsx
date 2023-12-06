@@ -8,6 +8,7 @@ import PaymentMethodModal from "../components/fares/PaymetMethodModal";
 export default function Fares() {
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [fares, setFares] = useState([]);
+    const [fareId, setFareId] = useState(0);
     /*setFares([
         {
             id: 1,
@@ -51,6 +52,7 @@ export default function Fares() {
                             <Fare
                                 fare={fare}
                                 setShowPaymentModal={setShowPaymentModal}
+                                setFareId={setFareId}
                                 key={fare.id}
                             />
                         )) : (<Spinner />)}
@@ -58,6 +60,7 @@ export default function Fares() {
                     <PaymentMethodModal
                         showPaymentModal={showPaymentModal}
                         setShowPaymentModal={setShowPaymentModal}
+                        fareId={fareId}
                     />
                 </Center>
             </ScrollView>

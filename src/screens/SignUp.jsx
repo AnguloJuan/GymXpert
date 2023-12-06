@@ -1,6 +1,7 @@
-import { Box, Button, ButtonText, Center, Image, Link, LinkText, ScrollView, Text, Toast, ToastDescription, ToastTitle, VStack, useToast } from '@gluestack-ui/themed';
+import { Box, Button, ButtonText, Center, Image, Link, LinkText, ScrollView, Text, useToast } from '@gluestack-ui/themed';
 import React, { useContext, useState } from 'react';
 import SignUpForm from '../components/SignUpForm';
+import Toasts from '../components/Toasts';
 import { AuthContext } from '../context/AuthContext';
 
 const SignUp = ({ navigation }) => {
@@ -63,16 +64,13 @@ const SignUp = ({ navigation }) => {
             toast.show({
                 placement: "bottom",
                 render: ({ id }) => {
-                    return (
-                        <Toast nativeId={id} action="error" variant="accent">
-                            <VStack space="xs">
-                                <ToastTitle>Error</ToastTitle>
-                                <ToastDescription>
-                                    Por favor, llena todos los campos correctamente
-                                </ToastDescription>
-                            </VStack>
-                        </Toast>
-                    );
+                    return <Toasts
+                        id={id}
+                        title="Error"
+                        body={<Text>Por favor, llena todos los campos correctamente</Text>}
+                        variant="accent"
+                        action="error"
+                    />
                 },
             })
             return;
