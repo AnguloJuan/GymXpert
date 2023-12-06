@@ -4,6 +4,7 @@ import BASE_URL from "../../../Constants";
 import { AuthContext } from "../../context/AuthContext";
 import StyledInput from "../Input";
 import Toasts from "../Toasts";
+import { Text } from "@gluestack-ui/themed";
 
 const PaymentMethodModal = (props) => {
     const {
@@ -52,7 +53,7 @@ const PaymentMethodModal = (props) => {
                                 return <Toasts
                                     id={id}
                                     title="Éxito"
-                                    body={res.data.message}
+                                    body={<Text>res.data.message</Text>}
                                     variant="accent"
                                     action="success"
                                 />
@@ -70,7 +71,7 @@ const PaymentMethodModal = (props) => {
                             return <Toasts
                                 id={id}
                                 title="Error"
-                                body={err.response.data.message}
+                                body={<Text>err.response.data.message</Text>}
                                 variant="accent"
                                 action="error"
                             />
@@ -84,7 +85,7 @@ const PaymentMethodModal = (props) => {
                     return <Toasts
                         id={id}
                         title="Error"
-                        body="Por favor, rellene todos los campos"
+                        body={<Text>Por favor, rellene todos los campos</Text>}
                         variant="accent"
                         action="error"
                     />

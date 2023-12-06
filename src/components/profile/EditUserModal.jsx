@@ -1,4 +1,4 @@
-import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, useToast } from "@gluestack-ui/themed";
+import { Button, ButtonText, CloseIcon, Heading, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ScrollView, Text, useToast } from "@gluestack-ui/themed";
 import { useEffect, useRef, useState } from "react";
 import BASE_URL from "../../../Constants";
 import Toasts from "../Toasts";
@@ -161,12 +161,7 @@ const EditUserModalForm = (props) => {
                                                         return <Toasts
                                                             id={id}
                                                             title="Éxito"
-                                                            body={
-                                                                <>
-                                                                    <Text>{res.data.message}</Text>
-                                                                    <Text>Codigo: {response.data.code}</Text>
-                                                                </>
-                                                            }
+                                                            body={<Text>{res.data.message}</Text>}
                                                             variant="accent"
                                                             action="success"
                                                         />
