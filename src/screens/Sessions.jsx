@@ -1,4 +1,4 @@
-import { Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
+import { Box, Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
 import { useEffect, useState } from "react";
 import BASE_URL from "../../Constants";
 import SessionNavBar from "../components/SessionNavBar";
@@ -51,7 +51,11 @@ export default function Sessions({ navigation, route }) {
                             showEnrolled={showEnrolled}
                             key={session.id}
                         />
-                    )) : <Spinner />}
+                    )) : showEnrolled ?
+                        <Box bg="$error100" w={"$full"} rounded={8} p={12}>
+                            <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No se ha inscrito a ninguna clase</Text>
+                        </Box> :
+                        <Spinner />}
                 </Center>
                 {sessions.length !== 0 && sessionId !== 0 && (
                     <>

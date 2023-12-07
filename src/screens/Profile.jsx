@@ -165,7 +165,7 @@ export default function Profile() {
                         <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay asistencias</Text>
                     </Box>
                 }
-                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} h={500}>
+                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} maxHeight={500}>
                     <Text fontSize={18} fontWeight="$medium" mb={16}>Ultimas Asistencias</Text>
                         <ScrollView>
                     <VStack gap={24}>
@@ -186,7 +186,7 @@ export default function Profile() {
                         <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay pago</Text>
                     </Box>
                 }
-                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} h={500}>
+                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} maxHeight={500}>
                         <ScrollView>
                     <Text fontSize={18} fontWeight="$medium" mb={16}>Ultimos Pagos</Text>
                     <VStack gap={24}>

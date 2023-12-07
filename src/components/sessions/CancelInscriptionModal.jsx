@@ -29,7 +29,7 @@ const CancelInscription = (props) => {
             <ModalBackdrop />
             <ModalContent bgColor="$white">
                 <ModalHeader>
-                    <Heading size="lg" color="#5d596c">Cancelar inscripción a la clase</Heading>
+                    <Heading size="lg" color="#5d596c">Cancelar inscripción</Heading>
                     <ModalCloseButton
                         stroke={"#5d596c"}
                         bgColor="$red100"
@@ -62,11 +62,17 @@ const CancelInscription = (props) => {
                         action="negative"
                         borderWidth="$0"
                         onPress={() => {
-                            // API call to register customer to session
-                            BASE_URL.post(`/session-days/subscribe`, {
-                                session_day_id: session.id,
-                                customer_id: user.id,
-                            })
+                            // API call to cancel customer to session
+                            const formData = new FormData();
+                            formData.append('session_day_id', session.id);
+                            formData.append('customer_id', user.id);
+                            console.log(session.id, user.id);
+                            const headers = {
+                                headers: {
+                                    'Accept': 'application/json',
+                                },
+                            }
+                            BASE_URL.delete("/session-days/cancel-subscription", formData, headers)
                                 .then((response) => {
                                     if (response.data.status === "success") {
                                         toast.show({
@@ -77,7 +83,7 @@ const CancelInscription = (props) => {
                                             render: ({ id }) => {
                                                 return <Toasts
                                                     id={id}
-                                                    title="Clase inscrita"
+                                                    title="Clase cancelada"
                                                     body={<Text>{response.data.message}</Text>}
                                                     variant="accent"
                                                     action="success"

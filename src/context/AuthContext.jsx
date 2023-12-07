@@ -1,8 +1,9 @@
 import React, { createContext, useState } from 'react';
 import BASE_URL from '../../Constants';
-import { useToast } from '@gluestack-ui/themed';
+import { Button, VStack, useToast } from '@gluestack-ui/themed';
 import Toasts from '../components/Toasts';
 import { Text } from '@gluestack-ui/themed';
+import { ButtonText } from '@gluestack-ui/themed';
 
 const AuthContext = createContext();
 
@@ -88,10 +89,13 @@ const AuthProvider = ({ children }) => {
 
     const logOut = async () => {
         try {
-            setUser({
-                id: 0,
-                isSignedIn: false,
-            })
+            setUser(
+                (prevCriteria) => ({
+                    ...prevCriteria,
+                    id: 0,
+                    isSignedIn: false,
+                })
+            )
         } catch (error) {
             console.error(error);
         }
@@ -112,6 +116,7 @@ const AuthProvider = ({ children }) => {
         }
         BASE_URL.post("/sign-up", formData, headers)
             .then((response) => {
+                console.log(response);
                 if (response.data.status === "success") {
                     toast.show({
                         placement: "bottom",
@@ -154,7 +159,7 @@ const AuthProvider = ({ children }) => {
                 }
             })
             .catch((error) => {
-                console.log(error.response);
+                console.log(error);
                 toast.show({
                     placement: "bottom",
                     containerStyle: {
