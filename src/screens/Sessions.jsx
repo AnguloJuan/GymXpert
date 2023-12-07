@@ -1,12 +1,69 @@
 import { Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import BASE_URL  from "../../Constants";
-import SessionComponent from "../components/sessions/Session";
+import BASE_URL from "../../Constants";
+import SessionNavBar from "../components/SessionNavBar";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
-export default function Sessions({ navigation }) {
+import SessionComponent from "../components/sessions/Session";
+
+export default function Sessions({ navigation, route }) {
     const [sessions, setSessions] = useState([]);
-    /*setSession([
+    const [sessionsList, setSessionsList] = useState([]);
+    const [showInscriptionModal, setShowInscriptionModal] = useState(false);
+    const [sessionId, setSessionId] = useState(0);
+    const [showEnrolled, setShowEnrolled] = useState(false);
+
+    // Fetch classes from backend with axios
+    useEffect(() => {
+        BASE_URL.get("/session-days")
+            .then((response) => {
+                setSessionsList(response.data.data);
+                setSessions(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    return (
+        <>
+            <SessionNavBar
+                showEnrolled={showEnrolled}
+                setSessions={setSessions}
+                setShowEnrolled={setShowEnrolled}
+                sessionsList={sessionsList}
+            />
+
+            <ScrollView p={16} minHeight={"$full"}>
+                <Center width="$full" bgColor="white" rounded={8} gap={24} p={24}>
+                    <Text fontSize={24} fontWeight="$medium" my={12} color="#5d596c">
+                        {showEnrolled ? "Clases inscritas" : "Clases disponibles"}
+                    </Text>
+
+                    {sessions.length !== 0 ? sessions.map((session) => (
+                        <SessionComponent
+                            session={session}
+                            navigation={navigation}
+                            setShowInscriptionModal={setShowInscriptionModal}
+                            setSessionId={setSessionId}
+                            showEnrolled={showEnrolled}
+                            key={session.id}
+                        />
+                    )) : <Spinner />}
+                </Center>
+                {sessions.length !== 0 && sessionId !== 0 && (
+                    <ConfirmInscription
+                        showInscriptionModal={showInscriptionModal}
+                        setShowInscriptionModal={setShowInscriptionModal}
+                        session={sessions.find((session) => session.id === sessionId) || ""}
+                        showEnrolled={showEnrolled}
+                    />
+                )}
+            </ScrollView>
+
+        </>
+    );
+}
+/*setSession([
         {
             id: 1,
             instructor: { name: "Albert Cook" },
@@ -41,48 +98,3 @@ export default function Sessions({ navigation }) {
             }
         },
     ]);*/
-    const [showInscriptionModal, setShowInscriptionModal] = useState(false);
-    const [sessionId, setSessionId] = useState(0);
-    let sessionsList = [];
-
-    // Fetch classes from backend with axios
-    useEffect(() => {
-        BASE_URL.get("/session-days")
-            .then((response) => {
-                sessionsList = response.data.data;
-                // set first 5 sessions
-                setSessions(sessionsList.slice(0, 5));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-
-    return (
-        <>
-            <ScrollView p={16} minHeight={"$full"}>
-                <Center width="$full" bgColor="white" rounded={8} gap={24} p={24}>
-                    <Text fontSize={24} fontWeight="$medium" my={12} color="#5d596c">Clases disponibles</Text>
-
-                    {sessions.length !== 0 ? sessions.map((session) => (
-                        <SessionComponent
-                            session={session}
-                            navigation={navigation}
-                            setShowInscriptionModal={setShowInscriptionModal}
-                            setSessionId={setSessionId}
-                            key={session.id}
-                        />
-                    )) : <Spinner />}
-                </Center>
-                {sessions.length !== 0 && sessionId !== 0 && (
-                    <ConfirmInscription
-                        showInscriptionModal={showInscriptionModal}
-                        setShowInscriptionModal={setShowInscriptionModal}
-                        session={sessions.find((session) => session.id === sessionId)}
-                    />
-                )}
-            </ScrollView>
-
-        </>
-    );
-}
