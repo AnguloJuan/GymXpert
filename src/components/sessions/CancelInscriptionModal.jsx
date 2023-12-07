@@ -66,13 +66,15 @@ const CancelInscription = (props) => {
                             const formData = new FormData();
                             formData.append('session_day_id', session.id);
                             formData.append('customer_id', user.id);
-                            console.log(session.id, user.id);
                             const headers = {
                                 headers: {
                                     'Accept': 'application/json',
                                 },
                             }
-                            BASE_URL.delete("/session-days/cancel-subscription", formData, headers)
+                            BASE_URL.delete("/session-days/cancel-subscription", { data: {
+                                session_day_id: session.id,
+                                customer_id: user.id
+                            } })
                                 .then((response) => {
                                     if (response.data.status === "success") {
                                         toast.show({
