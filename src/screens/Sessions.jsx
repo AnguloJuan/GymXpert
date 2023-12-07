@@ -4,11 +4,13 @@ import BASE_URL from "../../Constants";
 import SessionNavBar from "../components/SessionNavBar";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
 import SessionComponent from "../components/sessions/Session";
+import CancelInscription from "../components/sessions/CancelInscriptionModal";
 
 export default function Sessions({ navigation, route }) {
     const [sessions, setSessions] = useState([]);
     const [sessionsList, setSessionsList] = useState([]);
     const [showInscriptionModal, setShowInscriptionModal] = useState(false);
+    const [showCancelnModal, setShowCancelModal] = useState(false);
     const [sessionId, setSessionId] = useState(0);
     const [showEnrolled, setShowEnrolled] = useState(false);
 
@@ -44,6 +46,7 @@ export default function Sessions({ navigation, route }) {
                             session={session}
                             navigation={navigation}
                             setShowInscriptionModal={setShowInscriptionModal}
+                            setShowCancelModal={setShowCancelModal}
                             setSessionId={setSessionId}
                             showEnrolled={showEnrolled}
                             key={session.id}
@@ -51,12 +54,18 @@ export default function Sessions({ navigation, route }) {
                     )) : <Spinner />}
                 </Center>
                 {sessions.length !== 0 && sessionId !== 0 && (
-                    <ConfirmInscription
-                        showInscriptionModal={showInscriptionModal}
-                        setShowInscriptionModal={setShowInscriptionModal}
-                        session={sessions.find((session) => session.id === sessionId) || ""}
-                        showEnrolled={showEnrolled}
-                    />
+                    <>
+                        <ConfirmInscription
+                            showInscriptionModal={showInscriptionModal}
+                            setShowInscriptionModal={setShowInscriptionModal}
+                            session={sessions.find((session) => session.id === sessionId) || ""}
+                        />
+                        <CancelInscription
+                            showCancelModal={showCancelnModal}
+                            setShowCancelModal={setShowCancelModal}
+                            session={sessions.find((session) => session.id === sessionId) || ""}
+                        />
+                    </>
                 )}
             </ScrollView>
 

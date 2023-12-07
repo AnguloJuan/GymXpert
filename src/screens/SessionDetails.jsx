@@ -1,8 +1,10 @@
 import { Button, ButtonText, Center, Image, ScrollView, Text } from "@gluestack-ui/themed";
 import { useState } from "react";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
+import CancelInscription from "../components/sessions/CancelInscriptionModal";
+
 export default function ClassDetails({ route }) {
-    const { id } = route.params;
+    const { id, showEnrolled } = route.params;
     const [session, setSession] = useState(route.params.session);
     /* {
         instructor: {
@@ -26,6 +28,7 @@ export default function ClassDetails({ route }) {
         current_capacity: 20,
     }*/
     const [showInscriptionModal, setShowInscriptionModal] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
     return (
         <>
@@ -41,7 +44,7 @@ export default function ClassDetails({ route }) {
                         <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">Teléfono: {session.instructor.phone}</Text>
                     </Center>
                     <Center borderColor="#dbdade" borderWidth={1} rounded={8} w={"$full"} p={16} gap={8}>
-                        <Text fontSize={24} fontWeight="$medium"  textAlign="center" color="#6f6b7d" my={8} >{session.session.name}</Text>
+                        <Text fontSize={24} fontWeight="$medium" textAlign="center" color="#6f6b7d" my={8} >{session.session.name}</Text>
                         <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Descripción</Text>
                         <Text color="#6f6b7d" fontWeight="$normal" textAlign="center">{session.session.description}</Text>
                     </Center>
@@ -49,19 +52,35 @@ export default function ClassDetails({ route }) {
                         <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Asistentes</Text>
                         <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >{session.current_capacity} / {session.session.max_capacity}</Text>
                     </Center>
-                    <Button
-                        w={"$full"}
-                        onPress={() => setShowInscriptionModal(true)}>
-                        <ButtonText>
-                            Inscribirse
-                        </ButtonText>
-                    </Button>
+                    {showEnrolled ? (
+                        <Button
+                            w={"$full"}
+                            action="negative"
+                            onPress={() => setShowCancelModal(true)}>
+                            <ButtonText>
+                                Cancelar
+                            </ButtonText>
+                        </Button>
+                    ) : (
+                        <Button
+                            w={"$full"}
+                            onPress={() => setShowInscriptionModal(true)}>
+                            <ButtonText>
+                                Inscribirse
+                            </ButtonText>
+                        </Button>
+                    )}
 
                 </Center>
 
                 <ConfirmInscription
                     showInscriptionModal={showInscriptionModal}
                     setShowInscriptionModal={setShowInscriptionModal}
+                    session={session}
+                />
+                <CancelInscription
+                    showCancelModal={showCancelModal}
+                    setShowCancelModal={setShowCancelModal}
                     session={session}
                 />
             </ScrollView>

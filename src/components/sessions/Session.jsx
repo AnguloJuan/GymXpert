@@ -1,6 +1,6 @@
 import { Button, ButtonText, Center, HStack, Text } from "@gluestack-ui/themed"
 
-export default function Session({ session, navigation, setShowInscriptionModal, setSessionId }) {
+export default function Session({ session, navigation, setShowInscriptionModal, setShowCancelModal, setSessionId, showEnrolled }) {
     return (
         <Center borderColor="#dbdade" borderWidth={1} rounded={8} key={session.id} w={"$full"} p={16} gap={8}>
             <Text fontSize={24} fontWeight="$medium" textAlign="center" color="#6f6b7d" >{session.session.name}</Text>
@@ -12,23 +12,37 @@ export default function Session({ session, navigation, setShowInscriptionModal, 
                     action="positive"
                     onPress={
                         () => {
-                            navigation.navigate("Detalles de la clase", { id: session.id, session: session })
+                            navigation.navigate("Detalles de la clase", { id: session.id, session: session, showEnrolled: showEnrolled })
                         }
                     }>
                     <ButtonText>
                         Ver Detalles
                     </ButtonText>
                 </Button>
-                <Button
-                    w={"auto"}
-                    onPress={() => {
-                        setSessionId(session.id)
-                        setShowInscriptionModal(true)
-                    }}>
-                    <ButtonText>
-                        Inscribirse
-                    </ButtonText>
-                </Button>
+                {showEnrolled ? (
+                    <Button
+                        w={"auto"}
+                        action="negative"
+                        onPress={() => {
+                            setSessionId(session.id)
+                            setShowCancelModal(true)
+                        }}>
+                        <ButtonText>
+                            Cancelar
+                        </ButtonText>
+                    </Button>
+                ) : (
+                    <Button
+                        w={"auto"}
+                        onPress={() => {
+                            setSessionId(session.id)
+                            setShowInscriptionModal(true)
+                        }}>
+                        <ButtonText>
+                            Inscribirse
+                        </ButtonText>
+                    </Button>
+                )}
             </HStack>
         </Center>
     )
