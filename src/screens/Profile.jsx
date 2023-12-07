@@ -79,7 +79,7 @@ export default function Profile() {
             .then((response) => {
                 //setUser(response.data.data);
                 //setUser((prevCriteria) => ({ ...prevCriteria, isSignedIn: true }));
-                setUser((prevCriteria) => ({ 
+                setUser((prevCriteria) => ({
                     ...prevCriteria,
                     id: response.data.data.id,
                     name: response.data.data.name,
@@ -165,33 +165,37 @@ export default function Profile() {
                         <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay asistencias</Text>
                     </Box>
                 }
-                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24}>
-                    <Text fontSize={18} fontWeight="$medium" mb={16}>Asistencias</Text>
+                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} h={500}>
+                    <Text fontSize={18} fontWeight="$medium" mb={16}>Ultimas Asistencias</Text>
+                        <ScrollView>
                     <VStack gap={24}>
-                        {// Show the latest 5 attended sessions
-                            user.attended_sessions.slice(0, 5).reverse().map((session, index) => (
-                                <Asistencia key={index}
-                                    date={session.session_day.week_day.name}
-                                    start_hour={session.session_day.start_hour}
-                                    end_hour={session.session_day.end_hour}
-                                />
-                            ))
-                        }
+                            {// Show the latest 5 attended sessions
+                                user.attended_sessions.reverse().map((session, index) => (
+                                    <Asistencia key={index}
+                                        date={session.session_day.week_day.name}
+                                        start_hour={session.session_day.start_hour}
+                                        end_hour={session.session_day.end_hour}
+                                    />
+                                ))
+                            }
                     </VStack>
+                        </ScrollView>
                 </Box>
                 {user.payments.length > 0 ? null :
                     <Box bg="$error100" w={"$full"} rounded={8} p={12}>
                         <Text fontSize={16} fontWeight="$normal" color={"$error400"}>No hay pago</Text>
                     </Box>
                 }
-                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24}>
-                    <Text fontSize={18} fontWeight="$medium" mb={16}>Pagos</Text>
+                <Box bg="$white" w={"$full"} rounded={8} gap={8} p={24} h={500}>
+                        <ScrollView>
+                    <Text fontSize={18} fontWeight="$medium" mb={16}>Ultimos Pagos</Text>
                     <VStack gap={24}>
-                        {user.payments.slice(0, 5).reverse().map((payment, index) => (
-                            <Payment key={index} date={payment.fare.name} payment={payment.payment_type.name} />
-                        ))
-                        }
+
+                            {user.payments.reverse().map((payment, index) => (
+                                <Payment key={index} date={payment.fare.name} payment={payment.payment_type.name} />
+                            ))}
                     </VStack>
+                        </ScrollView>
                 </Box>
             </Box>
 
