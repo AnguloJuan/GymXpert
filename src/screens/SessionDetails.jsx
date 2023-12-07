@@ -47,7 +47,7 @@ export default function ClassDetails({ route }) {
                     </Center>
                     <Center borderColor="#dbdade" borderWidth={1} rounded={8} w={"$full"} p={16}>
                         <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >Asistentes</Text>
-                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >{session.participants.length} / {session.current_capacity}</Text>
+                        <Text fontSize={20} fontWeight="$medium" color="#6f6b7d" >{session.current_capacity} / {session.session.max_capacity}</Text>
                     </Center>
                     <Button
                         w={"$full"}
