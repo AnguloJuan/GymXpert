@@ -68,22 +68,41 @@ const ConfirmInscription = (props) => {
                                 customer_id: user.id,
                             })
                                 .then((response) => {
-                                    toast.show({
-                                        placement: "bottom",
-                                        containerStyle: {
-                                            display: "block"
-                                        },
-                                        render: ({ id }) => {
-                                            return <Toasts
-                                                id={id}
-                                                title="Clase inscrita"
-                                                body={<Text>{response.data.message}</Text>}
-                                                variant="accent"
-                                                action="success"
-                                            />
-                                        },
-                                    })
-                                    setShowInscriptionModal(false);
+                                    if (response.data.status === "success") {
+                                        toast.show({
+                                            placement: "bottom",
+                                            containerStyle: {
+                                                display: "block"
+                                            },
+                                            render: ({ id }) => {
+                                                return <Toasts
+                                                    id={id}
+                                                    title="Clase inscrita"
+                                                    body={<Text>{response.data.message}</Text>}
+                                                    variant="accent"
+                                                    action="success"
+                                                />
+                                            },
+                                        })
+                                        setShowInscriptionModal(false);
+                                    } else if (response.data.status === "failed") {
+                                        toast.show({
+                                            placement: "bottom",
+                                            containerStyle: {
+                                                display: "block"
+                                            },
+                                            render: ({ id }) => {
+                                                return <Toasts
+                                                    id={id}
+                                                    title="Error"
+                                                    body={response.data.errors.internal_error.map((error, id) => <Text key={id}>{error}</Text>)}
+                                                    variant="accent"
+                                                    action="error"
+                                                />
+                                            },
+                                        })
+                                        console.log(response);
+                                    }
                                 })
                                 .catch((error) => {
                                     console.log(error);
