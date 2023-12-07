@@ -44,6 +44,9 @@ const Synchronize = ({ navigation }) => {
         if (invalidCode || invalidEmail || user.password.length == 0 || user.code.length == 0 || user.email.length == 0) {
             toast.show({
                 placement: "bottom",
+                containerStyle: {
+                    display: "block"
+                },
                 render: ({ id }) => {
                     return <Toasts
                         id={id}

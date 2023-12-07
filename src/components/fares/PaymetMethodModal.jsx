@@ -49,11 +49,14 @@ const PaymentMethodModal = (props) => {
                     if (res.data.status === "success") {
                         toast.show({
                             placement: "top",
+                            containerStyle: {
+                                display: "block"
+                            },
                             render: ({ id }) => {
                                 return <Toasts
                                     id={id}
                                     title="Éxito"
-                                    body={<Text>res.data.message</Text>}
+                                    body={<Text>{res.data.message}</Text>}
                                     variant="accent"
                                     action="success"
                                 />
@@ -67,11 +70,14 @@ const PaymentMethodModal = (props) => {
                     console.log(err);
                     toast.show({
                         placement: "top",
+                        containerStyle: {
+                            display: "block"
+                        },
                         render: ({ id }) => {
                             return <Toasts
                                 id={id}
                                 title="Error"
-                                body={<Text>err.response.data.message</Text>}
+                                body={<Text>{err.response.data.message}</Text>}
                                 variant="accent"
                                 action="error"
                             />
@@ -81,6 +87,9 @@ const PaymentMethodModal = (props) => {
         } else {
             toast.show({
                 placement: "top",
+                containerStyle: {
+                    display: "block"
+                },
                 render: ({ id }) => {
                     return <Toasts
                         id={id}

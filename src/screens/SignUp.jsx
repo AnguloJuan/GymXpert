@@ -63,6 +63,9 @@ const SignUp = ({ navigation }) => {
             user.password.length == 0 || user.blood_group_id === 0) {
             toast.show({
                 placement: "bottom",
+                containerStyle: {
+                    display: "block"
+                },
                 render: ({ id }) => {
                     return <Toasts
                         id={id}

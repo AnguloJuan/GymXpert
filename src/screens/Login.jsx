@@ -2,6 +2,9 @@ import { Box, Button, ButtonText, Center, HStack, Image, Link, LinkText, Text } 
 import React, { useContext, useState } from 'react';
 import StyledInput from '../components/Input';
 import { AuthContext } from '../context/AuthContext';
+import Toasts from '../components/Toasts';
+import { useToast } from '@gluestack-ui/themed';
+import { VStack } from '@gluestack-ui/themed';
 
 const Login = ({ navigation }) => {
     const { logIn } = useContext(AuthContext);
@@ -26,6 +29,7 @@ const Login = ({ navigation }) => {
 
         setUser((prevCriteria) => ({ ...prevCriteria, [id]: value }));
     };
+    const toast = useToast();
 
     return (
         <Center minHeight={'$full'} p={24} bgColor='$white'>

@@ -8,22 +8,22 @@ import Payment from "../components/profile/Payment";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Profile() {
-    const [user, setUser] = useState({
-        id: 0,
-        name: "",
-        is_active: 0,
-        phone: "",
-        email: "",
-        emergency_phone: "",
-        blood_group: {
-            id: 0,
-            name: ""
-        },
-        attended_sessions: [],
-        payments: []
-    });
+    // const [user, setUser] = useState({
+    //     id: 0,
+    //     name: "",
+    //     is_active: 0,
+    //     phone: "",
+    //     email: "",
+    //     emergency_phone: "",
+    //     blood_group: {
+    //         id: 0,
+    //         name: ""
+    //     },
+    //     attended_sessions: [],
+    //     payments: []
+    // });
     const [showEditModal, setShowEditModal] = useState(false);
-    const { user: user_id } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
     /*let user1 = {// Temporal
         name: "Alanna Spinka",
@@ -75,9 +75,23 @@ export default function Profile() {
     useEffect(() => {
         //setUser(user1);
         // Get user data from API
-        BASE_URL.get(`/customers/${user_id.id}`)
+        BASE_URL.get(`/customers/${user.id}`)
             .then((response) => {
-                setUser(response.data.data);
+                //setUser(response.data.data);
+                //setUser((prevCriteria) => ({ ...prevCriteria, isSignedIn: true }));
+                setUser((prevCriteria) => ({ 
+                    ...prevCriteria,
+                    id: response.data.data.id,
+                    name: response.data.data.name,
+                    is_active: response.data.data.is_active,
+                    phone: response.data.data.phone,
+                    email: response.data.data.email,
+                    emergency_phone: response.data.data.emergency_phone,
+                    blood_group: response.data.data.blood_group,
+                    attended_sessions: response.data.data.attended_sessions,
+                    payments: response.data.data.payments,
+                    isSignedIn: true
+                }));
             })
             .catch((error) => {
                 console.log(error);

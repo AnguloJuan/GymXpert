@@ -70,6 +70,9 @@ const ConfirmInscription = (props) => {
                                 .then((response) => {
                                     toast.show({
                                         placement: "bottom",
+                                        containerStyle: {
+                                            display: "block"
+                                        },
                                         render: ({ id }) => {
                                             return <Toasts
                                                 id={id}
@@ -86,6 +89,9 @@ const ConfirmInscription = (props) => {
                                     console.log(error);
                                     toast.show({
                                         placement: "bottom",
+                                        containerStyle: {
+                                            display: "block"
+                                        },
                                         render: ({ id }) => {
                                             return <Toasts
                                                 id={id}

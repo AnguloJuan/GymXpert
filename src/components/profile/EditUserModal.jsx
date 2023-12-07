@@ -157,6 +157,9 @@ const EditUserModalForm = (props) => {
                                             if (res.data.status === "success") {
                                                 toast.show({
                                                     placement: "bottom",
+                                                    containerStyle: {
+                                                        display: "block"
+                                                    },
                                                     render: ({ id }) => {
                                                         return <Toasts
                                                             id={id}
@@ -174,6 +177,9 @@ const EditUserModalForm = (props) => {
                                             console.log(err);
                                             toast.show({
                                                 placement: "bottom",
+                                                containerStyle: {
+                                                    display: "block"
+                                                },
                                                 render: ({ id }) => {
                                                     return <Toasts
                                                         id={id}

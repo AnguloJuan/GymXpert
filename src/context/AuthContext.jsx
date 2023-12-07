@@ -7,25 +7,25 @@ import { Text } from '@gluestack-ui/themed';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    /* const [user, setUser] = useState({
-        id: 0,
-        name: '',
-        code: '',
-        phone: '',
-        emergencyPhone: '',
-        email: '',
-        bloodGroup: {
-            id: 0,
-            name: '',
-        },
-        isActive: 0,
-        payments: [],
-        attended_sessions: [],
-    }); */
     const [user, setUser] = useState({
         id: 0,
+        name: "",
+        is_active: 0,
+        phone: "",
+        email: "",
+        emergency_phone: "",
+        blood_group: {
+            id: 0,
+            name: ""
+        },
+        attended_sessions: [],
+        payments: [],
         isSignedIn: false,
     });
+    // const [user, setUser] = useState({
+    //     id: 0,
+    //     isSignedIn: false,
+    // });
     const toast = useToast();
 
     const logIn = async (code, password) => {
@@ -40,14 +40,20 @@ const AuthProvider = ({ children }) => {
         try {
             const loginResponse = await BASE_URL.post('/login', formData, headers);
             if (loginResponse.data.status === "success") {
-                setUser({
-                    id: loginResponse.data.customer_id,
-                    isSignedIn: true,
-                })
+                setUser(
+                    (prevCriteria) => ({
+                        ...prevCriteria,
+                        id: loginResponse.data.customer_id,
+                        isSignedIn: true,
+                    })
+                )
             }
             if (loginResponse.data.status === "failed") {
                 toast.show({
                     placement: "bottom",
+                    containerStyle: {
+                        display: "block"
+                    },
                     render: ({ id }) => {
                         return <Toasts
                             id={id}
@@ -63,6 +69,9 @@ const AuthProvider = ({ children }) => {
         } catch (error) {
             toast.show({
                 placement: "bottom",
+                containerStyle: {
+                    display: "block"
+                },
                 render: ({ id }) => {
                     return <Toasts
                         id={id}
@@ -106,14 +115,28 @@ const AuthProvider = ({ children }) => {
                 if (response.data.status === "success") {
                     toast.show({
                         placement: "bottom",
+                        duration: null,
+                        containerStyle: {
+                            display: "block"
+                        },
                         render: ({ id }) => {
                             return <Toasts
                                 id={id}
                                 title="Éxito"
                                 body={
                                     <>
-                                        <Text>{response.data.message}</Text>
-                                        <Text>Codigo: {response.data.code}</Text>
+                                        <VStack gap={12}>
+                                            <Text>{response.data.message}</Text>
+                                            <Text>Este es el código que se genero asociada a su cuenta con el que accedera a la aplicación</Text>
+                                            <Text>En caso de perderse o olvidarse del código tendra que consultar con un administrador</Text>
+                                            <Text fontWeight='bold'>Código: {response.data.code}</Text>
+                                            <Button
+                                                onPress={() => toast.close(id)}
+                                                variant="ghost"
+                                            >
+                                                <ButtonText>Entendido</ButtonText>
+                                            </Button>
+                                        </VStack>
                                     </>
                                 }
                                 variant="accent"
@@ -131,6 +154,9 @@ const AuthProvider = ({ children }) => {
                 console.log(error.response);
                 toast.show({
                     placement: "bottom",
+                    containerStyle: {
+                        display: "block"
+                    },
                     render: ({ id }) => {
                         return <Toasts
                             id={id}
@@ -159,6 +185,9 @@ const AuthProvider = ({ children }) => {
                 if (response.data.status === "success") {
                     toast.show({
                         placement: "bottom",
+                        containerStyle: {
+                            display: "block"
+                        },
                         render: ({ id }) => {
                             return <Toasts
                                 id={id}
@@ -166,7 +195,6 @@ const AuthProvider = ({ children }) => {
                                 body={
                                     <>
                                         <Text>{response.data.message}</Text>
-                                        <Text>Codigo: {response.data.code}</Text>
                                     </>
                                 }
                                 variant="accent"
@@ -182,6 +210,9 @@ const AuthProvider = ({ children }) => {
                 if (response.data.status === "failed") {
                     toast.show({
                         placement: "bottom",
+                        containerStyle: {
+                            display: "block"
+                        },
                         render: ({ id }) => {
                             return <Toasts
                                 id={id}
@@ -198,6 +229,9 @@ const AuthProvider = ({ children }) => {
                 console.log(error.response);
                 toast.show({
                     placement: "bottom",
+                    containerStyle: {
+                        display: "block"
+                    },
                     render: ({ id }) => {
                         return <Toasts
                             id={id}
@@ -215,6 +249,7 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
+                setUser,
                 logIn,
                 logOut,
                 signUp,
