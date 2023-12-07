@@ -10,10 +10,9 @@ const CancelInscription = (props) => {
         setShowCancelModal,
         session
     } = props;
-
     const toast = useToast();
     const ref = useRef(null);
-    const { user } = useContext(AuthContext);
+    const { user, setUser, setSessions } = useContext(AuthContext);
 
     return (
         <Modal
@@ -71,10 +70,12 @@ const CancelInscription = (props) => {
                                     'Accept': 'application/json',
                                 },
                             }
-                            BASE_URL.delete("/session-days/cancel-subscription", { data: {
-                                session_day_id: session.id,
-                                customer_id: user.id
-                            } })
+                            BASE_URL.delete("/session-days/cancel-subscription", {
+                                data: {
+                                    session_day_id: session.id,
+                                    customer_id: user.id
+                                }
+                            })
                                 .then((response) => {
                                     if (response.data.status === "success") {
                                         toast.show({
@@ -93,6 +94,14 @@ const CancelInscription = (props) => {
                                             },
                                         })
                                         setShowCancelModal(false);
+                                        // refresh page to update session
+                                        setSessions(user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id));
+                                        // update user inscriptions
+                                        setUser((prevCriteria) => ({
+                                            ...prevCriteria,
+                                            subscribed_sessions: user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id)
+                                        }));
+
                                     } else if (response.data.status === "failed") {
                                         toast.show({
                                             placement: "bottom",

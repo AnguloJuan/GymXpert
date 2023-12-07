@@ -1,11 +1,12 @@
 import { Box, Button, ButtonIcon, HStack, Text } from "@gluestack-ui/themed";
 import { Calendar, CalendarCheck } from "lucide-react-native";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function SessionNavBar({ showEnrolled, setShowEnrolled, setSessions, sessionsList }) {
     const { user } = useContext(AuthContext);
-    const subscriptions = sessionsList.filter((session) => session.participants.find((participant) => participant.customer.id === user.id));
+    const inscriptions = user.subscribed_sessions.map((session) => session.id);
+    const subscriptions = sessionsList.filter((session) => inscriptions.includes(session.id));
     return (
         <HStack
             position="relative"

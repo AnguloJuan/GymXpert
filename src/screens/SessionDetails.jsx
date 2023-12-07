@@ -1,11 +1,12 @@
 import { Button, ButtonText, Center, Image, ScrollView, Text } from "@gluestack-ui/themed";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
 import CancelInscription from "../components/sessions/CancelInscriptionModal";
+import BASE_URL from "../../Constants";
+import { Spinner } from "@gluestack-ui/themed";
 
 export default function ClassDetails({ route }) {
-    const { id, showEnrolled } = route.params;
-    const [session, setSession] = useState(route.params.session);
+    const { showEnrolled, sessionId } = route.params;
     /* {
         instructor: {
             name: "Albert Cook",
@@ -29,8 +30,30 @@ export default function ClassDetails({ route }) {
     }*/
     const [showInscriptionModal, setShowInscriptionModal] = useState(false);
     const [showCancelModal, setShowCancelModal] = useState(false);
+    const [session, setSession] = useState({
+        instructor: {
+            name: "",
+            email: "",
+            phone: "",
+        },
+        session: {
+            name: "",
+            description: "",
+        },
+        current_capacity: 0,
+    });
 
-    return (
+    useEffect(() => {
+        BASE_URL.get(`/session-days/${sessionId}`)
+            .then((response) => {
+                setSession(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    return session.lenght !== 0 ? (
         <>
             <ScrollView p={16} minHeight={"$full"}>
                 <Center width="$full" bgColor="white" rounded={8} gap={12} p={24}>
@@ -86,5 +109,5 @@ export default function ClassDetails({ route }) {
             </ScrollView>
 
         </>
-    );
+    ) : <Spinner />;
 }

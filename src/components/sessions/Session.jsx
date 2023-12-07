@@ -12,7 +12,7 @@ export default function Session({ session, navigation, setShowInscriptionModal, 
                     action="positive"
                     onPress={
                         () => {
-                            navigation.navigate("Detalles de la clase", { id: session.id, session: session, showEnrolled: showEnrolled })
+                            navigation.navigate("Detalles de la clase", { id: session.id, sessionId: session.id, showEnrolled: showEnrolled })
                         }
                     }>
                     <ButtonText>

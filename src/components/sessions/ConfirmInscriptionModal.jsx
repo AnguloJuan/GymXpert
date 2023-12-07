@@ -13,7 +13,7 @@ const ConfirmInscription = (props) => {
 
     const toast = useToast();
     const ref = useRef(null);
-    const { user } = useContext(AuthContext);
+    const { user, setUser, setSessions, sessions } = useContext(AuthContext);
 
     return (
         <Modal
@@ -85,6 +85,21 @@ const ConfirmInscription = (props) => {
                                             },
                                         })
                                         setShowInscriptionModal(false);
+                                        // Update user subscribed_sessions
+                                        BASE_URL.get(`/customers/${user.id}`)
+                                            .then((response) => {
+                                                setUser((prevCriteria) => ({
+                                                    ...prevCriteria,
+                                                    subscribed_sessions: response.data.data.subscribed_sessions,
+                                                }));
+                                            })
+                                            .catch((error) => {
+                                                console.log(error);
+                                            });
+
+                                        // Refresh page to update session
+                                        
+
                                     } else if (response.data.status === "failed") {
                                         toast.show({
                                             placement: "bottom",

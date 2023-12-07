@@ -16,7 +16,7 @@ const PaymentMethodModal = (props) => {
     const [paymentMethod, setPaymentMethod] = useState(0);
     const [invalidPaymentMethod, setInvalidPaymentMethod] = useState(false);
     const [creditCardNumber, setCreditCardNumber] = useState("");
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
     const toast = useToast();
 
     const ref = useRef(null);
@@ -63,6 +63,17 @@ const PaymentMethodModal = (props) => {
                             },
                         })
                         setShowPaymentModal(false);
+                        // Update customer payments
+                        BASE_URL.get(`/customers/${user.id}`)
+                            .then((res) => {
+                                setUser((prevCriteria) => ({
+                                    ...prevCriteria,
+                                    payments: res.data.data.payments,
+                                }));
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
                     }
                     console.log(res.data);
                 })

@@ -1,13 +1,15 @@
 import { Box, Center, ScrollView, Spinner, Text } from "@gluestack-ui/themed";
 import { useEffect, useState } from "react";
 import BASE_URL from "../../Constants";
-import SessionNavBar from "../components/SessionNavBar";
+import SessionNavBar from "../components/sessions/SessionNavBar";
 import ConfirmInscription from "../components/sessions/ConfirmInscriptionModal";
 import SessionComponent from "../components/sessions/Session";
 import CancelInscription from "../components/sessions/CancelInscriptionModal";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-export default function Sessions({ navigation, route }) {
-    const [sessions, setSessions] = useState([]);
+export default function Sessions({ navigation }) {
+    const { sessions, setSessions } = useContext(AuthContext);
     const [sessionsList, setSessionsList] = useState([]);
     const [showInscriptionModal, setShowInscriptionModal] = useState(false);
     const [showCancelnModal, setShowCancelModal] = useState(false);
