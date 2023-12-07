@@ -21,8 +21,11 @@ const AuthProvider = ({ children }) => {
         },
         attended_sessions: [],
         payments: [],
+        subscribed_sessions: [],
         isSignedIn: false,
     });
+    const [sessions, setSessions] = useState([]);
+
     // const [user, setUser] = useState({
     //     id: 0,
     //     isSignedIn: false,
@@ -266,6 +269,8 @@ const AuthProvider = ({ children }) => {
                 logOut,
                 signUp,
                 synchronize,
+                sessions,
+                setSessions
             }}
         >
             {children}

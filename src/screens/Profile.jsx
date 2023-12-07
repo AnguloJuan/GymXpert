@@ -90,6 +90,7 @@ export default function Profile() {
                     blood_group: response.data.data.blood_group,
                     attended_sessions: response.data.data.attended_sessions,
                     payments: response.data.data.payments,
+                    subscribed_sessions: response.data.data.subscribed_sessions,
                     isSignedIn: true
                 }));
             })
