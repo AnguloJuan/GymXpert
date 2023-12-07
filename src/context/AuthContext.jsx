@@ -144,10 +144,13 @@ const AuthProvider = ({ children }) => {
                             />
                         },
                     })
-                    setUser({
-                        id: response.data.customer_id,
-                        isSignedIn: true,
-                    })
+                    setUser(
+                        (prevCriteria) => ({
+                            ...prevCriteria,
+                            id: response.data.customer_id,
+                            isSignedIn: true,
+                        })
+                    )
                 }
             })
             .catch((error) => {
@@ -202,12 +205,16 @@ const AuthProvider = ({ children }) => {
                             />
                         },
                     })
-                    setUser({
-                        id: response.data.customer_id,
-                        isSignedIn: true,
-                    })
+                    setUser(
+                        (prevCriteria) => ({
+                            ...prevCriteria,
+                            id: response.data.customer_id,
+                            isSignedIn: true,
+                        })
+                    )
                 }
                 if (response.data.status === "failed") {
+                    console.log(response.data);
                     toast.show({
                         placement: "bottom",
                         containerStyle: {
@@ -217,7 +224,7 @@ const AuthProvider = ({ children }) => {
                             return <Toasts
                                 id={id}
                                 title="Error"
-                                body={<Text>{response.data.message}</Text>}
+                                body={response.data.errors.internal_error.map((error, id) => <Text key={id}>{error}</Text>)}
                                 variant="accent"
                                 action="error"
                             />

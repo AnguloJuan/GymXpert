@@ -21,11 +21,12 @@ const Synchronize = ({ navigation }) => {
         const { id, value } = e.target;
 
         //validation
-        if (id === "code" && !value.match(/^[0-9]+$/i)) {
-            setInvalidCode(true);
-            return;
-        } else {
-            setInvalidCode(false);
+        if (id === "code") {
+            if (!value.match(/^[0-9]+$/i) || value.length == 0) {
+                setInvalidCode(true);
+            } else {
+                setInvalidCode(false);
+            }
         }
         if (id === "email") {
             if (!value.match(
