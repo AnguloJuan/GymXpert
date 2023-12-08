@@ -95,13 +95,12 @@ const CancelInscription = (props) => {
                                             },
                                         })
                                         setShowCancelModal(false);
-                                        // update user inscriptions
+                                        // refresh page to update session
                                         setUser((prevCriteria) => ({
                                             ...prevCriteria,
                                             subscribed_sessions: user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id)
                                         }));
-                                        // refresh page to update session
-                                        setSessions(user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id));
+                                        setSessions((prevCriteria) => prevCriteria.filter((mapedSession) => mapedSession.id !== session.id));
                                         // update session current capacity
                                         session.current_capacity = session.current_capacity - 1;
 
