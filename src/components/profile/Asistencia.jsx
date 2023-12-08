@@ -4,7 +4,8 @@ import { CircleDot } from "lucide-react-native";
 const Asistencia = (props) => {
     const {
         date,
-        hours
+        start_hour,
+        end_hour,
     } = props;
 
     return (
@@ -14,7 +15,7 @@ const Asistencia = (props) => {
                 <Text fontSize={16} fontWeight="$medium">{date}</Text>
                 <HStack>
                     <Text fontSize={16}>Horario: </Text>
-                    <Text fontSize={16}>{hours}</Text>
+                    <Text fontSize={16}>{start_hour}hrs - {end_hour}hrs</Text>
                 </HStack>
             </VStack>
         </HStack>

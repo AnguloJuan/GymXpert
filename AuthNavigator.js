@@ -1,24 +1,27 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Calendar, CreditCard, User } from 'lucide-react-native';
-import React from 'react';
-import ClasesNavigation from './ClasesNavigation';
-import Fares from './screens/Fares';
-import LoginScreen from './screens/LoginScreen';
-import Profile from './screens/Profile';
-import SignUpScreen from './screens/signUpScreen';
+import React, { useContext } from 'react';
+import SessionsNavigation from './SessionsNavigation';
+import Fares from './src/screens/Fares';
+import Login from './src/screens/Login';
+import Profile from './src/screens/Profile';
+import SignUp from './src/screens/SignUp';
+import { AuthContext } from './src/context/AuthContext';
+import Synchronize from './src/screens/Synchronize';
+import LogOutButton from './src/components/LogOutButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthNavigator = () => {
-    const isSignedIn = true; // temporary variable
+    const { user } = useContext(AuthContext);
     return (
-        isSignedIn ? (
+        user.isSignedIn ? (
             <Tab.Navigator
-                initialRouteName='Clases'
+                initialRouteName='Perfil'
                 screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
+                    tabBarIcon: ({ color }) => {
                         let iconName;
 
                         if (route.name === 'Perfil') {
@@ -33,15 +36,19 @@ const AuthNavigator = () => {
                     tabBarInactiveTintColor: '#5d596c',
                     tabBarActiveBackgroundColor: '#0077e6',
                     tabBarInactiveBackgroundColor: '#fff',
+                    headerRight: () => (
+                        <LogOutButton />
+                    ),
                 })}>
                 <Tab.Screen name="Perfil" component={Profile} />
                 <Tab.Screen name="Tarifas" component={Fares} />
-                <Tab.Screen name="Clases" component={ClasesNavigation} options={{ headerShown: false }} />
+                <Tab.Screen name="Clases" component={SessionsNavigation} options={{ headerShown: false }} />
             </Tab.Navigator>
         ) : (
             <Stack.Navigator initialRouteName='Iniciar Sesión'>
-                <Stack.Screen name="Iniciar Sesión" component={LoginScreen} />
-                <Stack.Screen name="Registro" component={SignUpScreen} />
+                <Stack.Screen name="Iniciar Sesión" component={Login} />
+                <Stack.Screen name="Registro" component={SignUp} />
+                <Stack.Screen name="Sincronizar" component={Synchronize} />
             </Stack.Navigator>
         )
     );
