@@ -97,8 +97,8 @@ const ConfirmInscription = (props) => {
                                                 console.log(error);
                                             });
 
-                                        // Refresh page to update session
-                                        
+                                        //  Update session current_capacity
+                                        session.current_capacity = session.current_capacity + 1;
 
                                     } else if (response.data.status === "failed") {
                                         toast.show({

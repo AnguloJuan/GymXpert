@@ -3,6 +3,7 @@ import { useContext, useRef } from "react";
 import BASE_URL from "../../../Constants";
 import { AuthContext } from "../../context/AuthContext";
 import Toasts from "../Toasts";
+import { useNavigation } from "@react-navigation/native";
 
 const CancelInscription = (props) => {
     const {
@@ -94,13 +95,15 @@ const CancelInscription = (props) => {
                                             },
                                         })
                                         setShowCancelModal(false);
-                                        // refresh page to update session
-                                        setSessions(user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id));
                                         // update user inscriptions
                                         setUser((prevCriteria) => ({
                                             ...prevCriteria,
                                             subscribed_sessions: user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id)
                                         }));
+                                        // refresh page to update session
+                                        setSessions(user.subscribed_sessions.filter((mapedSession) => mapedSession.id !== session.id));
+                                        // update session current capacity
+                                        session.current_capacity = session.current_capacity - 1;
 
                                     } else if (response.data.status === "failed") {
                                         toast.show({
